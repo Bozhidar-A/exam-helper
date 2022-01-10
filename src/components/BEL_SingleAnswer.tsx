@@ -1,16 +1,4 @@
-import { FormEvent, useEffect, useState } from "react";
-
-// let sampleData = {
-//     "id": 1,
-//     "qNum": 1,
-//     "question": "В кой ред НЕ е допусната правописна грешка?",
-//     "wrong": [
-//       "А) разгорели, отлетели, затрептяли",
-//       "Б) сърдечен, порядачен, списъчен",
-//       "Г) свързвам, завързвам, подвръзвам"
-//     ],
-//     "correct": "В) семейна, бездействие, портфейл"
-// }
+import { FormEvent, useState } from "react";
 
 function Options(props:any)
 {
@@ -18,11 +6,14 @@ function Options(props:any)
 
     function HandleChange(e: FormEvent<HTMLDivElement>)
     {
+        //typescript complains here and it led to this thing
         let el = e?.currentTarget as HTMLInputElement;
-        // console.log(el)
+        //return the value to BEL_SingleAnswer
         props.UpdateScore(el.value);
     }
    
+    //map over the possible answers by making them radios
+    //name is just Q followed by the uid
     return(
         <div>
             {options.map(op => (
@@ -38,22 +29,26 @@ function Options(props:any)
 function BEL_SingleAnswer(props:any)
 {
     const [debugAns, setDebugAns] = useState("none");
-    const [givenPts, setGivenPts] = useState(0);
+    const [answeredCorrect, setAnsweredCorrect] = useState(false);
 
     function UpdateScore(givenAns:string)
     {
         setDebugAns(givenAns)
+
+        //to avoid giving or taking points when unnecessary
+        //on a correct answer give points and set answered to true
+        //on a wrong answer check if it has been answered correctly before and then take points
         if(givenAns === props.data.correct)
         {
             props.UpdateScore(1);
-            setGivenPts(1);
+            setAnsweredCorrect(true);
         }
         else
         {
-            if(givenPts > 0)
+            if(answeredCorrect)
             {
                 props.UpdateScore(-1); // -Math.abs(num);
-                setGivenPts(0);
+                setAnsweredCorrect(false);
             }
         }
     }
