@@ -2,6 +2,8 @@ import { useState } from "react";
 
 function BEL_FindMissingPunctuation(props:any){
 
+    // console.log(props.checking)
+
     const [inputText, setInputText] = useState("");
     const [givenPts, setGivenPts] = useState(0);
 

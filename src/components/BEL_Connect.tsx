@@ -1,6 +1,5 @@
 import { FormEvent, useState } from "react";
-import IConnect from "../interfaces/IConnect";
-import IConnectOptions from "../interfaces/IConnect"
+import IConnect from "../interfaces/IBEL_Connect";
 
 function Option(props:any){
     let options = [...props.option.wrong, props.option.answers[0].correct, props.option.answers[1].correct].sort()

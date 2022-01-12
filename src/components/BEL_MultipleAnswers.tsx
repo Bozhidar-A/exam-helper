@@ -1,5 +1,5 @@
 import { FormEvent, useEffect, useState } from "react";
-import IMultipleAnswers from "../interfaces/IMultipleAnswers";
+import IMultipleAnswers from "../interfaces/IBEL_MultipleAnswers";
 
 function Options(props:any)
 {

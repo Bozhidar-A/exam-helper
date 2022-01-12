@@ -1,5 +1,5 @@
 import { FormEvent, useEffect, useState } from "react";
-import IMultipleSubAnswersSelect from "../interfaces/IMultipleSubAnswersSelect";
+import IMultipleSubAnswersSelect from "../interfaces/IBEL_IMultipleSubAnswersSelect";
 
 interface IOptions{
     data:any,
