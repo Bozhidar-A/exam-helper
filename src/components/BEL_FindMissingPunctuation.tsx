@@ -9,6 +9,8 @@ function BEL_FindMissingPunctuation(props:any){
 
     function HandleChange(text:string)
     {
+        setInputText(text);
+
         if(props.data.correct === text)
         {
             props.UpdateScore(5);

@@ -1,8 +1,8 @@
-export default interface IBEL_MultipleAnswers{
+export default interface IBEL_WritePoints{
     id:number,
     qNum:number,
     question:string,
-    wrong:string[],
     correct:string[],
+    maxPoints:number,
     UpdateScore:(added:number) => void
 }

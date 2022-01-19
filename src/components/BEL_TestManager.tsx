@@ -5,6 +5,7 @@ import BEL_SingleAnswer from "./BEL_SingleAnswer";
 import BEL_FindMissingPunctuation from "./BEL_FindMissingPunctuation";
 import BEL_MultipleSubAnswersWrite from "./BEL_MultipleSubAnswersWrite";
 import BEL_Connect from "./BEL_Connect";
+import BEL_WritePoints from "./BEL_WritePoints";
 
 const data = [
     {
@@ -193,6 +194,21 @@ const data = [
                 ]
             },
         ]
+    },
+    {
+        "id":7,
+        "qNum": 1,
+        "type": "BEL_WritePoints",
+        "year":2021,
+        "session":"first",
+        "question":"38. В свитъка за свободните отговори запишете с ЦИТАТИ от текста ДВА ПРИМЕРА (С ПО ЕДИН СТИХ), които се отнасят до представянето на любимата като неземно създание.",
+        "correct":[
+            "Ще бъдеш в бяло – с вейка от маслина",
+            "и като ангел в бяло облекло",
+            "И тих ще пия техните лъчи",
+            "ще пия светлина, лечебни глътки"
+        ],
+        "maxPoints":2
     }
 ]
 
@@ -204,6 +220,8 @@ function TestManager()
 
     function UpdateScore(added:number)
     {
+        console.log(added);
+        
         setScore(score + added);
     }
 
@@ -217,17 +235,20 @@ function TestManager()
         {data.map(q => {
             switch (q.type) {
                 case "BEL_SingleAnswer":
-                    return <BEL_SingleAnswer data={q} UpdateScore={UpdateScore}></BEL_SingleAnswer>
+                    //q.wrong! as string[] is very dumb
+                    return <BEL_SingleAnswer id={q.id} qNum={q.qNum} question={q.question!} wrong={q.wrong! as string[]} correct={q.correct! as string} UpdateScore={UpdateScore}></BEL_SingleAnswer>
                 case "BEL_MultipleAnswers":
-                    return <BEL_MultipleAnswers data={q} UpdateScore={UpdateScore}></BEL_MultipleAnswers>
+                    return <BEL_MultipleAnswers id={q.id} qNum={q.qNum} question={q.question!} wrong={q.wrong! as string[]} correct={q.correct! as string[]} UpdateScore={UpdateScore}></BEL_MultipleAnswers>
                 case "BEL_MultipleSubAnswersSelect":
                     return <BEL_MultipleSubAnswersSelect data={q} UpdateScore={UpdateScore}></BEL_MultipleSubAnswersSelect>
                 case "BEL_FindMissingPunctuation":
                     return <BEL_FindMissingPunctuation data={q} UpdateScore={UpdateScore} checking={checking}></BEL_FindMissingPunctuation>
                 case "BEL_MultipleSubAnswersWrite":
-                    return <BEL_MultipleSubAnswersWrite data={q} UpdateScore={UpdateScore}></BEL_MultipleSubAnswersWrite>
+                    return <BEL_MultipleSubAnswersWrite UpdateScore={UpdateScore} id={q.id} qNum={q.qNum} question={q.question!} answers={q.answers!}></BEL_MultipleSubAnswersWrite>
                 case "BEL_Connect":
                     return <BEL_Connect id={q.id} qNum={q.qNum} type={q.type} options={q.options!} UpdateScore={UpdateScore}></BEL_Connect>
+                case "BEL_WritePoints":
+                    return <BEL_WritePoints id={q.id} qNum={q.qNum} question={q.question!} correct={q.correct as string[]} maxPoints={q.maxPoints!} UpdateScore={UpdateScore}></BEL_WritePoints>
                 default:
                     break;
             }

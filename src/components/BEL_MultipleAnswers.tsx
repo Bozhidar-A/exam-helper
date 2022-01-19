@@ -1,20 +1,20 @@
 import { FormEvent, useEffect, useState } from "react";
-import IMultipleAnswers from "../interfaces/IBEL_MultipleAnswers";
+import IBEL_MultipleAnswers from "../interfaces/IBEL_MultipleAnswers";
+import IBEL_MultipleAnswersOptions from "../interfaces/IBEL_MultipleAnswersOptions";
+import IMultipleAnswers from "../interfaces/IMultipleAnswers";
 
-function Options(props:any)
+function Options(props:IBEL_MultipleAnswersOptions)
 {
-    function HandleChange(e: FormEvent<HTMLDivElement>)
+    function HandleChange(e: string)
     {
-        //typescript complains here and it led to this thing
-        let el = e?.currentTarget as HTMLInputElement;
-        props.setValue(el.value);
+        props.UpdateScore(e);
     }
    
     return(
         <div>
-            {props.opts.map((op:string) => (
+            {props.options.map((op:string) => (
                 <div>
-                    <input type="checkbox" id={`${props.id}-${op}`} name={`Q${props.id}`} value={op} onChange={e => HandleChange(e)}></input> 
+                    <input type="checkbox" id={`${op}-${props.quid}`} name={`Q${props.quid}`} value={op} onChange={e => HandleChange(e.target.value)}></input> 
                     <label htmlFor={op}>{op}</label>
                 </div>
             ))}
@@ -22,11 +22,11 @@ function Options(props:any)
     )
 }
 
-function BEL_MultipleAnswers(props:any)
+function BEL_MultipleAnswers(props:IBEL_MultipleAnswers)
 {
     const [ans, setAns] = useState<IMultipleAnswers[]>([]);
 
-    let options = [...props.data.wrong, ...props.data.correct].sort();
+    let options = [...props.wrong, ...props.correct].sort();
 
     useEffect(() => {
         let dict = options.map(op => {return {name:op,selected:false}})
@@ -39,7 +39,7 @@ function BEL_MultipleAnswers(props:any)
         let index = tmp.findIndex(op => op.name === el);
         tmp[index].selected = !tmp[index].selected;
 
-        if(props.data.correct.includes(tmp[index].name))
+        if(props.correct.includes(tmp[index].name))
         {
             if(tmp[index].selected)
             {
@@ -56,8 +56,8 @@ function BEL_MultipleAnswers(props:any)
 
     return(
         <div>
-            <p>{props.data.question}</p>
-            <Options setValue={(e: string) => HandleGetValFromOption(e)} opts={options} id={props.data.id}></Options>
+            <p>{props.question}</p>
+            <Options UpdateScore={(e: string) => HandleGetValFromOption(e)} options={options} quid={props.id}></Options>
             <p>Given: {JSON.stringify(ans?.filter(an => an.selected === true))}</p>
         </div>
     )

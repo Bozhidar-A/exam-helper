@@ -1,15 +1,15 @@
-import { FormEvent, useState } from "react";
+import { useState } from "react";
+import IBEL_SingleAnswer from "../interfaces/IBEL_SingleAnswer";
+import IBEL_SingleAnswerOptions from "../interfaces/IBEL_SingleAnswerOptions";
 
-function Options(props:any)
+function Options(props:IBEL_SingleAnswerOptions)
 {
-    let options = [...props.data.wrong, props.data.correct].sort();
+    let options = [...props.wrong, props.correct].sort();
 
-    function HandleChange(e: FormEvent<HTMLDivElement>)
+    function HandleChange(e:string)
     {
-        //typescript complains here and it led to this thing
-        let el = e?.currentTarget as HTMLInputElement;
         //return the value to BEL_SingleAnswer
-        props.UpdateScore(el.value);
+        props.UpdateScore(e)
     }
    
     //map over the possible answers by making them radios
@@ -18,7 +18,7 @@ function Options(props:any)
         <div>
             {options.map(op => (
                 <div>
-                    <input type="radio" id={op} name={`Q${props.data.id}`} value={op} onChange={e => HandleChange(e)}></input> 
+                    <input type="radio" id={`${op}-${props.quid}`} name={`Q${props.quid}`} value={op} onChange={e => HandleChange(e.target.value)}></input> 
                     <label htmlFor={op}>{op}</label>
                 </div>
             ))}
@@ -26,7 +26,7 @@ function Options(props:any)
     )
 }
 
-function BEL_SingleAnswer(props:any)
+function BEL_SingleAnswer(props:IBEL_SingleAnswer)
 {
     const [debugAns, setDebugAns] = useState("none");
     const [answeredCorrect, setAnsweredCorrect] = useState(false);
@@ -38,7 +38,7 @@ function BEL_SingleAnswer(props:any)
         //to avoid giving or taking points when unnecessary
         //on a correct answer give points and set answered to true
         //on a wrong answer check if it has been answered correctly before and then take points
-        if(givenAns === props.data.correct)
+        if(givenAns === props.correct)
         {
             props.UpdateScore(1);
             setAnsweredCorrect(true);
@@ -55,8 +55,8 @@ function BEL_SingleAnswer(props:any)
 
     return(
         <div>
-            <p>{props.data.question}</p>
-            <Options UpdateScore={UpdateScore} data={props.data}></Options>
+            <p>{props.question}</p>
+            <Options UpdateScore={UpdateScore} correct={props.correct} wrong={props.wrong} quid={props.id}></Options>
             <p>Given: {debugAns}</p>
         </div>
     )

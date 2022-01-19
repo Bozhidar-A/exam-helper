@@ -1,5 +1,5 @@
-import { FormEvent, useEffect, useState } from "react";
-import IMultipleSubAnswersSelect from "../interfaces/IBEL_IMultipleSubAnswersSelect";
+import { FormEvent, useState } from "react";
+import IMultipleSubAnswersSelect from "../interfaces/IBEL_MultipleSubAnswersSelect";
 
 interface IOptions{
     data:IMultipleSubAnswersSelect,
@@ -8,23 +8,23 @@ interface IOptions{
     id:number
 }
 
-function Options({data,setValue,index,id}:IOptions)
+function Options(props:IOptions)
 {
     function HandleChange(e: FormEvent<HTMLDivElement>, index:number)
     {
         let el = e?.currentTarget as HTMLInputElement;
         console.log(el, index)
-        setValue(el.value, index);
+        props.setValue(el.value, index);
     }
 
-    let options = [data.correct, ...data.wrong].sort();
+    let options = [props.data.correct, ...props.data.wrong].sort();
    
     return(
         <div>
-            <p>{data.label}</p>
+            <p>{props.data.label}</p>
             {options.map(op => (
                 <div>
-                    <input type="radio" id={op} name={`Q${id}-${data.label}`} value={op} onChange={e => HandleChange(e,index)}></input> 
+                    <input type="radio" id={op} name={`Q${props.id}-${props.data.label}`} value={op} onChange={e => HandleChange(e,props.index)}></input> 
                     <label htmlFor={op}>{op}</label> 
                 </div>
             ))}

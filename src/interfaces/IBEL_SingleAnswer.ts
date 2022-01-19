@@ -1,8 +1,8 @@
-export default interface IBEL_MultipleAnswers{
+export default interface IBEL_SingleAnswer{
     id:number,
     qNum:number,
     question:string,
     wrong:string[],
-    correct:string[],
+    correct:string,
     UpdateScore:(added:number) => void
 }
