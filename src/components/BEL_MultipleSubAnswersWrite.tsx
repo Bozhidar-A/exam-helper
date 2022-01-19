@@ -1,45 +1,33 @@
 import { FormEvent, useEffect, useState } from "react";
-import IMultipleSubAnswersSelect from "../interfaces/IBEL_IMultipleSubAnswersSelect";
+import IBEL_MultipleSubAnswersWriteOptions from "../interfaces/IBEL_MultipleSubAnswersWriteOptions";
+import IBEL_MultipleSubAnswersWrite from "../interfaces/IBEL_MultipleSubAnswersWrite";
 
-interface IOptions{
-    data:any,
-    setValue: any,
-    index:number,
-    id:number
-}
-
-function Options({data,setValue,index,id}:IOptions)
+function Options(props:IBEL_MultipleSubAnswersWriteOptions)
 {
     function HandleChange(e: FormEvent<HTMLDivElement>, index:number, label:string)
     {
         let el = e?.currentTarget as HTMLInputElement;
-        setValue(el.value, index, label);
+        props.setValue(el.value, index, label);
     }
    
     return(
         <div>
-            <p>{data.label}</p>
-            <p>{data.question}</p>
-            {[...Array(data.correct.length)].map((x, i) =>
+            <p>{props.data.label}</p>
+            <p>{props.data.question}</p>
+            {[...Array(props.data.correct.length)].map((x, i) =>
                 <div>
                     <p>{i}.</p>
-                    <input type="text" onChange={e => HandleChange(e, i, data.label)}></input>
+                    <input type="text" onChange={e => HandleChange(e, i, props.data.label)}></input>
                 </div>
             )}
-            {/* {options.map(op => (
-                <div>
-                    <input type="radio" id={op} name={`Q${id}-${data.label}`} value={op} onChange={e => HandleChange(e,index)}></input> 
-                    <label htmlFor={op}>{op}</label> 
-                </div>
-            ))} */}
         </div>
     )
 }
 
-function BEL_MultipleSubAnswersWrite(props:any)
+function BEL_MultipleSubAnswersWrite(props:IBEL_MultipleSubAnswersWrite)
 {
     let base:any = {};
-    props.data.answers.map((op:any)=> {
+    props.answers.map((op:any)=> {
         base[`${op.label}`] = [];
     })//there has to be a better way to do this
     
@@ -50,7 +38,7 @@ function BEL_MultipleSubAnswersWrite(props:any)
         let clone = ans
         clone[label][index] = e;
 
-        if(props.data.answers.filter((obj:any) => obj.label === label)[0].correct[index] === e)
+        if(props.answers.filter((obj:any) => obj.label === label)[0].correct[index] === e)
         {
             props.UpdateScore(1);
             setAnsweredCorrect(true);
@@ -69,8 +57,8 @@ function BEL_MultipleSubAnswersWrite(props:any)
 
     return(
         <div>
-            <p>{props.data.question}</p>
-            {props.data.answers.map((op:any, k:number) => {
+            <p>{props.question}</p>
+            {props.answers.map((op:any, k:number) => {
                 return <Options setValue={(e: string, index:number, label:string) => HandleSetValue(e, index, label)} data={op} index={k} id={props.id}></Options>
             })}
             <p>Given: {JSON.stringify(ans)}</p>

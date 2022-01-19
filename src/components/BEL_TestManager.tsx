@@ -6,6 +6,8 @@ import BEL_FindMissingPunctuation from "./BEL_FindMissingPunctuation";
 import BEL_MultipleSubAnswersWrite from "./BEL_MultipleSubAnswersWrite";
 import BEL_Connect from "./BEL_Connect";
 import BEL_WritePoints from "./BEL_WritePoints";
+import IBEL_IMultipleSubAnswersWriteOptions from "../interfaces/IBEL_MultipleSubAnswersWriteOptions";
+import IBEL_IMultipleSubAnswersWriteAnswers from "../interfaces/IBEL_IMultipleSubAnswersWriteAnswers";
 
 const data = [
     {
@@ -244,7 +246,7 @@ function TestManager()
                 case "BEL_FindMissingPunctuation":
                     return <BEL_FindMissingPunctuation data={q} UpdateScore={UpdateScore} checking={checking}></BEL_FindMissingPunctuation>
                 case "BEL_MultipleSubAnswersWrite":
-                    return <BEL_MultipleSubAnswersWrite UpdateScore={UpdateScore} id={q.id} qNum={q.qNum} question={q.question!} answers={q.answers!}></BEL_MultipleSubAnswersWrite>
+                    return <BEL_MultipleSubAnswersWrite UpdateScore={UpdateScore} id={q.id} qNum={q.qNum} question={q.question!} answers={q.answers! as IBEL_IMultipleSubAnswersWriteAnswers[]}></BEL_MultipleSubAnswersWrite>
                 case "BEL_Connect":
                     return <BEL_Connect id={q.id} qNum={q.qNum} type={q.type} options={q.options!} UpdateScore={UpdateScore}></BEL_Connect>
                 case "BEL_WritePoints":
