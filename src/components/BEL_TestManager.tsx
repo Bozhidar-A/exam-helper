@@ -6,7 +6,6 @@ import BEL_FindMissingPunctuation from "./BEL_FindMissingPunctuation";
 import BEL_MultipleSubAnswersWrite from "./BEL_MultipleSubAnswersWrite";
 import BEL_Connect from "./BEL_Connect";
 import BEL_WritePoints from "./BEL_WritePoints";
-import IBEL_IMultipleSubAnswersWriteOptions from "../interfaces/IBEL_MultipleSubAnswersWriteOptions";
 import IBEL_IMultipleSubAnswersWriteAnswers from "../interfaces/IBEL_IMultipleSubAnswersWriteAnswers";
 
 const data = [
@@ -221,14 +220,16 @@ function TestManager()
     const [checking, setChecking] = useState(false)
 
     function UpdateScore(added:number)
-    {
-        console.log(added);
-        
-        setScore(score + added);
+    {      
+        let tmp = score;
+        tmp += added;
+        setScore(tmp);
     }
 
     function StartChecking(){
         setChecking(true);
+        debugger;
+        console.log(score)
     }
 
     return(<div>
@@ -238,9 +239,9 @@ function TestManager()
             switch (q.type) {
                 case "BEL_SingleAnswer":
                     //q.wrong! as string[] is very dumb
-                    return <BEL_SingleAnswer id={q.id} qNum={q.qNum} question={q.question!} wrong={q.wrong! as string[]} correct={q.correct! as string} UpdateScore={UpdateScore}></BEL_SingleAnswer>
+                    return <BEL_SingleAnswer id={q.id} qNum={q.qNum} question={q.question!} wrong={q.wrong! as string[]} correct={q.correct! as string} UpdateScore={UpdateScore} checking={checking}></BEL_SingleAnswer>
                 case "BEL_MultipleAnswers":
-                    return <BEL_MultipleAnswers id={q.id} qNum={q.qNum} question={q.question!} wrong={q.wrong! as string[]} correct={q.correct! as string[]} UpdateScore={UpdateScore}></BEL_MultipleAnswers>
+                    return <BEL_MultipleAnswers id={q.id} qNum={q.qNum} question={q.question!} wrong={q.wrong! as string[]} correct={q.correct! as string[]} UpdateScore={UpdateScore} checking={checking}></BEL_MultipleAnswers>
                 case "BEL_MultipleSubAnswersSelect":
                     return <BEL_MultipleSubAnswersSelect data={q} UpdateScore={UpdateScore}></BEL_MultipleSubAnswersSelect>
                 case "BEL_FindMissingPunctuation":
@@ -252,6 +253,8 @@ function TestManager()
                 case "BEL_WritePoints":
                     return <BEL_WritePoints id={q.id} qNum={q.qNum} question={q.question!} correct={q.correct as string[]} maxPoints={q.maxPoints!} UpdateScore={UpdateScore}></BEL_WritePoints>
                 default:
+                    console.error(`No component found for the following data. This should not be possible.`)
+                    console.log(q)
                     break;
             }
         })}

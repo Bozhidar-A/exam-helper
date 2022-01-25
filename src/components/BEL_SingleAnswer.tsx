@@ -11,6 +11,21 @@ function Options(props:IBEL_SingleAnswerOptions)
         //return the value to BEL_SingleAnswer
         props.UpdateScore(e)
     }
+
+    function UpdateStyle(op:string)
+    {
+        if(props.checking)
+        {
+            if(op === props.correct)
+            {
+                return "bg-lime-500" 
+            }
+            else
+            {
+                return "bg-red-600"
+            }
+        }
+    }
    
     //map over the possible answers by making them radios
     //name is just Q followed by the uid
@@ -18,8 +33,10 @@ function Options(props:IBEL_SingleAnswerOptions)
         <div>
             {options.map(op => (
                 <div>
-                    <input type="radio" id={`${op}-${props.quid}`} name={`Q${props.quid}`} value={op} onChange={e => HandleChange(e.target.value)}></input> 
-                    <label htmlFor={op}>{op}</label>
+                    <label className={UpdateStyle(op)}>
+                        <input disabled={props.checking} type="radio" id={`${op}-${props.quid}`} name={`Q${props.quid}`} value={op} onChange={e => HandleChange(e.target.value)}></input> 
+                        {op}
+                    </label>
                 </div>
             ))}
         </div>
@@ -53,11 +70,23 @@ function BEL_SingleAnswer(props:IBEL_SingleAnswer)
         }
     }
 
+    function CheckingDisplayScore()
+    {
+        if(debugAns === props.correct)
+        {
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
     return(
         <div>
             <p>{props.question}</p>
-            <Options UpdateScore={UpdateScore} correct={props.correct} wrong={props.wrong} quid={props.id}></Options>
-            <p>Given: {debugAns}</p>
+            <Options UpdateScore={UpdateScore} correct={props.correct} wrong={props.wrong} quid={props.id} checking={props.checking}></Options>
+            <p>{props.checking && <p>Взети точки {CheckingDisplayScore()}</p>}</p>
         </div>
     )
 }

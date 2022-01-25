@@ -4,5 +4,6 @@ export default interface IBEL_MultipleAnswers{
     question:string,
     wrong:string[],
     correct:string[],
-    UpdateScore:(added:number) => void
+    UpdateScore:(added:number) => void,
+    checking:boolean
 }
