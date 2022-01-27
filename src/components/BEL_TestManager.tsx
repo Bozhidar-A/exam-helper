@@ -228,7 +228,6 @@ function TestManager()
 
     function StartChecking(){
         setChecking(true);
-        debugger;
         console.log(score)
     }
 
@@ -243,13 +242,13 @@ function TestManager()
                 case "BEL_MultipleAnswers":
                     return <BEL_MultipleAnswers id={q.id} qNum={q.qNum} question={q.question!} wrong={q.wrong! as string[]} correct={q.correct! as string[]} UpdateScore={UpdateScore} checking={checking}></BEL_MultipleAnswers>
                 case "BEL_MultipleSubAnswersSelect":
-                    return <BEL_MultipleSubAnswersSelect data={q} UpdateScore={UpdateScore}></BEL_MultipleSubAnswersSelect>
+                    return <BEL_MultipleSubAnswersSelect data={q} UpdateScore={UpdateScore} checking={checking}></BEL_MultipleSubAnswersSelect>
                 case "BEL_FindMissingPunctuation":
                     return <BEL_FindMissingPunctuation data={q} UpdateScore={UpdateScore} checking={checking}></BEL_FindMissingPunctuation>
                 case "BEL_MultipleSubAnswersWrite":
-                    return <BEL_MultipleSubAnswersWrite UpdateScore={UpdateScore} id={q.id} qNum={q.qNum} question={q.question!} answers={q.answers! as IBEL_IMultipleSubAnswersWriteAnswers[]}></BEL_MultipleSubAnswersWrite>
+                    return <BEL_MultipleSubAnswersWrite UpdateScore={UpdateScore} id={q.id} qNum={q.qNum} question={q.question!} answers={q.answers! as IBEL_IMultipleSubAnswersWriteAnswers[]} checking={checking}></BEL_MultipleSubAnswersWrite>
                 case "BEL_Connect":
-                    return <BEL_Connect id={q.id} qNum={q.qNum} type={q.type} options={q.options!} UpdateScore={UpdateScore}></BEL_Connect>
+                    return <BEL_Connect id={q.id} qNum={q.qNum} type={q.type} options={q.options!} UpdateScore={UpdateScore} checking={checking}></BEL_Connect>
                 case "BEL_WritePoints":
                     return <BEL_WritePoints id={q.id} qNum={q.qNum} question={q.question!} correct={q.correct as string[]} maxPoints={q.maxPoints!} UpdateScore={UpdateScore}></BEL_WritePoints>
                 default:

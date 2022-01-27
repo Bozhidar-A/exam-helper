@@ -14,10 +14,11 @@ function Options(props:IBEL_MultipleSubAnswersWriteOptions)
         <div>
             <p>{props.data.label}</p>
             <p>{props.data.question}</p>
-            {[...Array(props.data.correct.length)].map((x, i) =>
+            {props.data.correct.map((correct:string, i:number) =>
                 <div>
                     <p>{i}.</p>
                     <input type="text" onChange={e => HandleChange(e, i, props.data.label)}></input>
+                    {props.checking && <p className="bg-lime-500" >{correct}</p>}
                 </div>
             )}
         </div>
@@ -25,14 +26,18 @@ function Options(props:IBEL_MultipleSubAnswersWriteOptions)
 }
 
 function BEL_MultipleSubAnswersWrite(props:IBEL_MultipleSubAnswersWrite)
-{
-    let base:any = {};
-    props.answers.map((op:any)=> {
-        base[`${op.label}`] = [];
-    })//there has to be a better way to do this
-    
-    const [ans, setAns] = useState(base);
+{    
+    const [ans, setAns] = useState<any>();
     const [answeredCorrect, setAnsweredCorrect] = useState(false);
+
+    useEffect(() => {
+        let base:any = {};
+        props.answers && props.answers.map((op:any)=> {
+            base[`${op.label}`] = [];
+        })//there has to be a better way to do this
+
+        setAns(base)
+    }, [])
 
     function HandleSetValue(e: string, index:number, label:string) {
         let clone = ans
@@ -55,13 +60,30 @@ function BEL_MultipleSubAnswersWrite(props:IBEL_MultipleSubAnswersWrite)
         setAns(clone);
     }
 
+    function CheckingDisplayScore()
+    {
+        let finScore = 0
+
+        Object.keys(ans).map((key:string) => {
+            props.answers.filter(data => data.label === key)[0].correct.map((an:string) => {
+                if(ans[key].includes(an))
+                {
+                    finScore++;
+                }
+            })
+        })
+
+        return finScore;
+    }
+
     return(
         <div>
             <p>{props.question}</p>
-            {props.answers.map((op:any, k:number) => {
-                return <Options setValue={(e: string, index:number, label:string) => HandleSetValue(e, index, label)} data={op} index={k} id={props.id}></Options>
+            {props.answers && props.answers.map((op:any, k:number) => {
+                return <Options setValue={(e: string, index:number, label:string) => HandleSetValue(e, index, label)} data={op} index={k} id={props.id} checking={props.checking}></Options>
             })}
-            <p>Given: {JSON.stringify(ans)}</p>
+            {/* <p>Given: {JSON.stringify(ans)}</p> */}
+            {props.checking && <p>Взети точки {CheckingDisplayScore()}</p>}
         </div>
     )
 }

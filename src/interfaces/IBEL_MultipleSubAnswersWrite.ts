@@ -5,5 +5,6 @@ export default interface IBEL_IMultipleSubAnswersWrite{
     qNum:number,
     question:string,
     answers:IBEL_IMultipleSubAnswersWriteAnswers[],
-    UpdateScore:(added:number) => void
+    UpdateScore:(added:number) => void,
+    checking: boolean
 }

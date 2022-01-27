@@ -16,5 +16,6 @@ export default interface IConnect{
     qNum:number,
     type:string,
     options:IConnectOptions[],
-    UpdateScore:(added:number) => void
+    UpdateScore:(added:number) => void,
+    checking: boolean
 }

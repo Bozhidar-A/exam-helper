@@ -2,8 +2,6 @@ import { useState } from "react";
 
 function BEL_FindMissingPunctuation(props:any){
 
-    // console.log(props.checking)
-
     const [inputText, setInputText] = useState("");
     const [givenPts, setGivenPts] = useState(0);
 
@@ -27,7 +25,13 @@ function BEL_FindMissingPunctuation(props:any){
 
     return(<div>
         <p>{props.data.question}</p>
-        <textarea onChange={e => {HandleChange(e.target.value)}}>{props.data.wrong}</textarea>
+        <textarea disabled={props.checking} onChange={e => {HandleChange(e.target.value)}} value={props.data.wrong}></textarea>
+        {props.checking && 
+            <div>
+                <textarea className="bg-lime-500" disabled={true} value={props.data.correct}></textarea>
+                {props.checking && <p>Взети точки {inputText === props.data.correct ? 5 : 0}</p>}
+                {/* TODO write better points get for this */}
+            </div>}
     </div>)
 }
 

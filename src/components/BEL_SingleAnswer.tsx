@@ -86,7 +86,7 @@ function BEL_SingleAnswer(props:IBEL_SingleAnswer)
         <div>
             <p>{props.question}</p>
             <Options UpdateScore={UpdateScore} correct={props.correct} wrong={props.wrong} quid={props.id} checking={props.checking}></Options>
-            <p>{props.checking && <p>Взети точки {CheckingDisplayScore()}</p>}</p>
+            {props.checking && <p>Взети точки {CheckingDisplayScore()}</p>}
         </div>
     )
 }
