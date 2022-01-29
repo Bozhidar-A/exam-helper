@@ -1,70 +1,111 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
+import { isPropertySignature } from "typescript";
 import IConnect from "../interfaces/IBEL_Connect";
+import IBEL_IConnectState from "../interfaces/IBEL_IConnectState";
 
 function Option(props:any){
     let options = [...props.option.wrong, props.option.answers[0].correct, props.option.answers[1].correct].sort()
 
-    function HandleChange(event:any, index:number, label:string)
+    function HandleChange(event:string, label:string)
     {
-        // let el = event.currentTarget as HTMLInputElement;
-        props.UpdateScore(event.currentTarget.value, index, label)
+        props.UpdateScore(event, label)
     }
 
     return(<div>
         <p>{props.label}</p>
         {props.option.answers.map((op:any) => {
-            return <label>
+            return <div>
+                <label>
                 {op.label}
-                <select onChange={e => HandleChange(e, props.index, props.label)}>
+                <select disabled={props.checking} onChange={e => HandleChange(e.target.value, op.label)}>
+                    <option value="">Моля изберете опция</option>
                     {options.map((op:string) => {
                         return <option value={op}>{op}</option>
                     })}
                 </select>
-            </label>
+                </label>
+            </div>
         })}
+        {props.checking && <p className="bg-lime-500" >{props.option.answers[0].correct}, {props.option.answers[1].correct}</p>}
     </div>)
 }
 
-function BEL_Connect({id,qNum,type,options,UpdateScore}:IConnect){
+function BEL_Connect(props:IConnect){
+    const [ans, setAns] = useState<IBEL_IConnectState[]>([]);
 
-    let base:any = {};
-    options.map((op:any)=> {
-        base[`${op.label}`] = [];
-    })//there has to be a better way to do this
-    
+    useEffect(() => {
+        let base:IBEL_IConnectState[] = [];
 
-    const [ans, setAns] = useState(base);
-    const [answeredCorrect, setAnsweredCorrect] = useState(false);
+        props.options && props.options.map((op:any)=> {
+            op.answers.map((an:any) => {
+                base.push({label:an.label, answer:"", correctGiven:false})
+            })
+        })//there has to be a better way to do this
 
-    function HandleUpdateScore(selected:string, index:number, label:string)
-    {
-        let clone = ans
-        clone[label][index] = selected;
+        setAns(base)
+    }, [])
 
-        options.map((op:any) => {
-            op.answers.map((ans:any) => {
-                if(selected === ans.correct)
+    /**
+     * TODO REWRITE. Fins the correct obj from props based on value
+     * @param {string} label - The correct label property on the correct object
+     */
+    function FindCorrectObj(label:string){
+        let correct = {label:"",correct:""};
+
+        props.options.map((op:any) => {
+            op.answers.forEach((an:any) => {
+                if(an.label === label)
                 {
-                    UpdateScore(1);
-                    setAnsweredCorrect(true);
-                }
-                else
-                {
-                    if(answeredCorrect)
-                    {
-                        UpdateScore(-1);
-                        setAnsweredCorrect(false);
-                    }
+                    correct = an
+                    return;
                 }
             })
         })
+
+        return correct;
+    }
+
+    function HandleUpdateScore(selected:string, label:string)
+    {
+        let clone = [...ans];
+        let correctObj:{label:string,correct:string} = FindCorrectObj(label)
+
+        if(correctObj.label === label && correctObj.correct === selected)
+        {
+            props.UpdateScore(1);
+            clone.filter(la => la.label === label)[0].correctGiven = true;
+        }
+        else if(clone.filter(la => la.label === label)[0].correctGiven === true)
+        {
+            props.UpdateScore(-1);
+            clone.filter(la => la.label === label)[0].correctGiven = false;
+        }
+    
+        clone.filter(la => la.label === label)[0].answer = selected;
+
+        setAns(clone)
+    }
+
+    function CheckingDisplayScore()
+    {
+        let finScore = 0;
+
+        ans.forEach(an => {
+            if(an.answer === FindCorrectObj(an.label).correct)
+            {
+                finScore++;
+            }
+        })
+
+        return finScore;
     }
 
     return(<div>
-        {/* <p>{qNum}</p> */}
-        {options.map((op:any, i:number) => {
-            return <Option option={op} UpdateScore={HandleUpdateScore} index={i} label={op.label}></Option>
+        {props.options && props.options.map((op:any) => {
+            return <Option option={op} UpdateScore={HandleUpdateScore} label={op.label} checking={props.checking}></Option>
         })}
+        {/* <p>{JSON.stringify(ans)}</p> */}
+        {props.checking && <p>Взети точки {CheckingDisplayScore()}</p>}
     </div>)
 }
 

@@ -17,7 +17,7 @@ function Options(props:IBEL_MultipleSubAnswersWriteOptions)
             {props.data.correct.map((correct:string, i:number) =>
                 <div>
                     <p>{i}.</p>
-                    <input type="text" onChange={e => HandleChange(e, i, props.data.label)}></input>
+                    <input type="text" disabled={props.checking} onChange={e => HandleChange(e, i, props.data.label)}></input>
                     {props.checking && <p className="bg-lime-500" >{correct}</p>}
                 </div>
             )}

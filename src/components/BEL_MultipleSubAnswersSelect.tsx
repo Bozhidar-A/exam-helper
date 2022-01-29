@@ -41,7 +41,7 @@ function Options(props:IOptions)
             {options.map(op => (
                 <div>
                     <label className={UpdateStyle(op)}>
-                        <input type="radio" id={op} name={`Q${props.id}-${props.data.label}`} value={op} onChange={e => HandleChange(e,props.index)}></input> 
+                        <input type="radio" disabled={props.checking} id={op} name={`Q${props.id}-${props.data.label}`} value={op} onChange={e => HandleChange(e,props.index)}></input> 
                         {op}
                     </label> 
                 </div>
