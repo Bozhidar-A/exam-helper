@@ -14,7 +14,7 @@ function BEL_WritePoints(props:IBEL_WritePoints){
 
         let pts = 0;
 
-        ans.map(an => {
+        ans.forEach(an => {
             if(props.correct.includes(an))
             {
                 if(pts < props.maxPoints)
@@ -26,7 +26,7 @@ function BEL_WritePoints(props:IBEL_WritePoints){
 
         props.UpdateScore(-Math.abs(givenPts)); //supposedly this is better then *-1
 
-        if(pts != 0)//this is needed or setState refused to work properly and will ignore the calls in TestManager
+        if(pts !== 0)//this is needed or setState refused to work properly and will ignore the calls in TestManager
         {
             props.UpdateScore(pts);
         }
@@ -34,10 +34,28 @@ function BEL_WritePoints(props:IBEL_WritePoints){
         setGivenPts(pts);
     }
 
+    function CheckingDisplayScore()
+    {
+        let finScore = 0;
+
+        inputText.forEach((an:string) => {
+            if(props.correct.includes(an))
+            {
+                finScore++;
+            }
+        })
+
+        return finScore;
+    }
+
     return(<div>
         <p>{props.question}</p>
         <p>Разделете отговорите си със символа |</p>
-        <input type="text" onChange={e => HandleChange(e.target.value)}></input>
+        <input type="text" disabled={props.checking} onChange={e => HandleChange(e.target.value)}></input>
+        {props.checking && <div>
+            <textarea className="bg-lime-500" disabled={true} value={props.correct.join(" | ")}></textarea>
+            <p>Взети точки {CheckingDisplayScore()}</p>
+        </div>}
     </div>)
 }
 

@@ -4,5 +4,6 @@ export default interface IBEL_WritePoints{
     question:string,
     correct:string[],
     maxPoints:number,
-    UpdateScore:(added:number) => void
+    UpdateScore:(added:number) => void,
+    checking: boolean
 }

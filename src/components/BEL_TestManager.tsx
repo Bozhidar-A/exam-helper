@@ -14,7 +14,7 @@ const data = [
     "qNum": 1,
     "type":"BEL_SingleAnswer",
     "year":2021,
-    "session":"first",
+    "session":1,
     "question": "В кой ред НЕ е допусната правописна грешка?",
     "wrong": [
       "А) разгорели, отлетели, затрептяли",
@@ -28,7 +28,7 @@ const data = [
         "qNum": 1,
         "type": "BEL_MultipleAnswers",
         "year":2021,
-        "session":"first",
+        "session":1,
         "question": "31. Изброени са факти от двата текста, както и факти, които липсват в тях. Всвитъка за свободните отговори запишете САМОбуквите на отговорите, с които са означени ЧЕТИРИТЕ факта, ОТСЪСТВАЩИ в посочените текстове.",
         "wrong": [
           "В) Днес в Българиятвърде малко хора упражняват медникарския занаят, като сред тях са и три жени.",
@@ -48,7 +48,7 @@ const data = [
         "qNum": 1,
         "type": "BEL_MultipleSubAnswersSelect",
         "year":2021,
-        "session":"first",
+        "session":1,
         "question": "35. За всяко празно място изберете НАЙ-УМЕСТНАТА от думите и я запишете срещу съответната буква в свитъка за свободните отговори.Гербът представлява графично ………… (А), създадено по определени правила, което принадлежи на даден род, град, държава, организация и т.н. Той е ……..…. (Б) знак, съчетаващ фигури и предмети с определено символно значение. Всяка съвременна държава има свой герб, който е неин ………… (В) символ и е израз на нейния суверенитет. Науката, която ………… (Г) гербовата символика и описва гербовете, се нарича хералдика.",
         "answers":[
             {
@@ -90,7 +90,7 @@ const data = [
         "qNum": 1,
         "type": "BEL_FindMissingPunctuation",
         "year":2021,
-        "session":"first",
+        "session":1,
         "question": "37. В текста са пропуснати САМО ПЕТ препинателни знака. Препишете текста в свитъка за свободните отговори, като поставите пропуснатите знаци.",
         "wrong":"Човек, който иска да намали теглото си трябва да потърси специалист. Контролът на теглото трябва да бъде непрекъснат, но ако цял живот сме на диета ще се лишим от много храни. Известен диетолог твърди Храната приемана ежедневно от нас, ни зарежда с енергия, от която ние не трябва да се лишаваме.",
         "correct": "Човек, който иска да намали теглото си, трябва да потърси специалист. Контролът на теглото трябва да бъде непрекъснат, но ако цял живот сме на диета, ще се лишим от много храни. Известен диетолог твърди: „Храната, приемана ежедневно от нас, ни зарежда с енергия, от която ние не трябва да се лишаваме“."
@@ -100,7 +100,7 @@ const data = [
         "qNum": 1,
         "type":"BEL_MultipleSubAnswersWrite",
         "year":2021,
-        "session":"first",
+        "session":1,
         "question":"36. В свитъка за свободните отговори срещу съответната буква запишете правилните ФОРМИ на думите, поставени в скоби.",
         "answers":[
             {
@@ -141,7 +141,7 @@ const data = [
         "qNum": 1,
         "type": "BEL_Connect",
         "year":2021,
-        "session":"first",
+        "session":1,
         "options":[
             {
                 "label":"40. Свържете името на героинята с името на автора, от чиято литературна творба е всяка от тях. В свитъка за свободните отговори срещу съответната буква запишете името на автора.",
@@ -201,7 +201,7 @@ const data = [
         "qNum": 1,
         "type": "BEL_WritePoints",
         "year":2021,
-        "session":"first",
+        "session":1,
         "question":"38. В свитъка за свободните отговори запишете с ЦИТАТИ от текста ДВА ПРИМЕРА (С ПО ЕДИН СТИХ), които се отнасят до представянето на любимата като неземно създание.",
         "correct":[
             "Ще бъдеш в бяло – с вейка от маслина",
@@ -212,6 +212,7 @@ const data = [
         "maxPoints":2
     }
 ]
+
 
 
 function TestManager()
@@ -234,7 +235,7 @@ function TestManager()
     return(<div>
         <p>{score}</p>
         {checking ? null : <button type="button" onClick={StartChecking}>checking</button>}
-        {data.map(q => {
+        {data.forEach(q => {
             switch (q.type) {
                 case "BEL_SingleAnswer":
                     //q.wrong! as string[] is very dumb
@@ -250,7 +251,7 @@ function TestManager()
                 case "BEL_Connect":
                     return <BEL_Connect id={q.id} qNum={q.qNum} type={q.type} options={q.options!} UpdateScore={UpdateScore} checking={checking}></BEL_Connect>
                 case "BEL_WritePoints":
-                    return <BEL_WritePoints id={q.id} qNum={q.qNum} question={q.question!} correct={q.correct as string[]} maxPoints={q.maxPoints!} UpdateScore={UpdateScore}></BEL_WritePoints>
+                    return <BEL_WritePoints id={q.id} qNum={q.qNum} question={q.question!} correct={q.correct as string[]} maxPoints={q.maxPoints!} UpdateScore={UpdateScore} checking={checking}></BEL_WritePoints>
                 default:
                     console.error(`No component found for the following data. This should not be possible.`)
                     console.log(q)
