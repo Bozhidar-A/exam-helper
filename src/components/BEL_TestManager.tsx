@@ -21,7 +21,7 @@ function TestManager()
 
     useEffect(() => {
         GetMaturaYearSession(2020,1).then((result:IAPI) => {
-            if(result.dbStatus === "OK"){
+            if(result.status === "OK"){
                 setTestData(result.data);
                 setLoading(false);
             }

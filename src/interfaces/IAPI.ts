@@ -1,4 +1,4 @@
 export default interface IAPI{
-    dbStatus:string,
+    status:string,
     data:{}[]
 }
