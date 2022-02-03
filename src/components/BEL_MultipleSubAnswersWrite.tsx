@@ -43,7 +43,7 @@ function BEL_MultipleSubAnswersWrite(props:IBEL_MultipleSubAnswersWrite)
         let clone = ans
         clone[label][index] = e;
 
-        if(props.answers.filter((obj:any) => obj.label === label)[0].correct[index] === e)
+        if(props.answers.filter((obj:any) => obj.label === label)[0].correct[index].toLowerCase() === e)
         {
             props.UpdateScore(1);
             setAnsweredCorrect(true);
@@ -66,7 +66,7 @@ function BEL_MultipleSubAnswersWrite(props:IBEL_MultipleSubAnswersWrite)
 
         Object.keys(ans).map((key:string) => {
             props.answers.filter(data => data.label === key)[0].correct.map((an:string) => {
-                if(ans[key].includes(an))
+                if(ans[key].toLowerCase().includes(an))
                 {
                     finScore++;
                 }

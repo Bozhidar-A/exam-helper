@@ -38,12 +38,14 @@ function BEL_WritePoints(props:IBEL_WritePoints){
     {
         let finScore = 0;
 
-        inputText.forEach((an:string) => {
-            if(props.correct.includes(an))
-            {
+        for(let an in inputText){
+            if(props.correct.includes(an) && finScore <= props.maxPoints){
                 finScore++;
             }
-        })
+            else{
+                break;
+            }
+        }
 
         return finScore;
     }
