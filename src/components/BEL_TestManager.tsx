@@ -35,7 +35,7 @@ function TestManager()
                 setLoading(false);
             }
             else{
-                console.error(result.data)
+                console.error(result.error)
                 setAPIError(true);
             }
         })
@@ -61,23 +61,23 @@ function TestManager()
                 try{
                     switch (q.type) {
                         case "BEL_Uncheckable":
-                            return <BEL_Uncheckable question={q.question!} checking={checking}></BEL_Uncheckable>
+                            return <BEL_Uncheckable key={q.id} question={q.question!} checking={checking}></BEL_Uncheckable>
                         case "BEL_Works":
-                            return <BEL_Works textsArr={q.textsArr!}></BEL_Works> 
+                            return <BEL_Works key={q.id} textsArr={q.textsArr!}></BEL_Works> 
                         case "BEL_SingleAnswer":
-                            return <BEL_SingleAnswer id={q.id} qNum={q.qNum} question={q.question!} wrong={q.wrong as string[]} correct={q.correct as string} UpdateScore={UpdateScore} checking={checking}></BEL_SingleAnswer>
+                            return <BEL_SingleAnswer key={q.id} id={q.id} qNum={q.qNum} question={q.question!} wrong={q.wrong as string[]} correct={q.correct as string} UpdateScore={UpdateScore} checking={checking}></BEL_SingleAnswer>
                         case "BEL_MultipleAnswers":
-                            return <BEL_MultipleAnswers id={q.id} qNum={q.qNum} question={q.question!} wrong={q.wrong! as string[]} correct={q.correct! as string[]} UpdateScore={UpdateScore} checking={checking}></BEL_MultipleAnswers>
+                            return <BEL_MultipleAnswers key={q.id} id={q.id} qNum={q.qNum} question={q.question!} wrong={q.wrong! as string[]} correct={q.correct! as string[]} UpdateScore={UpdateScore} checking={checking}></BEL_MultipleAnswers>
                         case "BEL_MultipleSubAnswersSelect":
-                            return <BEL_MultipleSubAnswersSelect data={q} UpdateScore={UpdateScore} checking={checking}></BEL_MultipleSubAnswersSelect>
+                            return <BEL_MultipleSubAnswersSelect key={q.id} data={q} UpdateScore={UpdateScore} checking={checking}></BEL_MultipleSubAnswersSelect>
                         case "BEL_FindMissingPunctuation":
-                            return <BEL_FindMissingPunctuation data={q} UpdateScore={UpdateScore} checking={checking}></BEL_FindMissingPunctuation>
+                            return <BEL_FindMissingPunctuation key={q.id} data={q} UpdateScore={UpdateScore} checking={checking}></BEL_FindMissingPunctuation>
                         case "BEL_MultipleSubAnswersWrite":
-                            return <BEL_MultipleSubAnswersWrite UpdateScore={UpdateScore} id={q.id} qNum={q.qNum} question={q.question!} answers={q.answers! as IBEL_IMultipleSubAnswersWriteAnswers[]} checking={checking}></BEL_MultipleSubAnswersWrite>
+                            return <BEL_MultipleSubAnswersWrite key={q.id} UpdateScore={UpdateScore} id={q.id} qNum={q.qNum} question={q.question!} answers={q.answers! as IBEL_IMultipleSubAnswersWriteAnswers[]} checking={checking}></BEL_MultipleSubAnswersWrite>
                         case "BEL_Connect":
-                            return <BEL_Connect id={q.id} qNum={q.qNum} type={q.type} options={q.options!} UpdateScore={UpdateScore} checking={checking}></BEL_Connect>
+                            return <BEL_Connect key={q.id} id={q.id} qNum={q.qNum} type={q.type} options={q.options!} UpdateScore={UpdateScore} checking={checking}></BEL_Connect>
                         case "BEL_WritePoints":
-                            return <BEL_WritePoints id={q.id} qNum={q.qNum} question={q.question!} correct={q.correct as string[]} maxPoints={q.maxPoints!} UpdateScore={UpdateScore} checking={checking}></BEL_WritePoints>
+                            return <BEL_WritePoints key={q.id} id={q.id} qNum={q.qNum} question={q.question!} correct={q.correct as string[]} maxPoints={q.maxPoints!} UpdateScore={UpdateScore} checking={checking}></BEL_WritePoints>
                         default:
                             console.error(`No component found for the following data. This should not be possible.`)
                             console.log(q)

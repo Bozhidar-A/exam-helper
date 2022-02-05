@@ -33,5 +33,6 @@ export interface OptionAnswer {
 
 export default interface IAPI{
     status:string,
+    error:any,
     data:APIData[]
 }
