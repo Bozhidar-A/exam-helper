@@ -5,7 +5,7 @@ interface IOptions{
     data:IMultipleSubAnswersSelect,
     setValue: any,
     index:number,
-    id:number,
+    quid:number,
     checking: boolean
 }
 
@@ -39,9 +39,9 @@ function Options(props:IOptions)
         <div>
             <p>{props.data.label}</p>
             {options.map(op => (
-                <div>
+                <div key={`${op}-${props.quid}`}>
                     <label className={UpdateStyle(op)}>
-                        <input type="radio" disabled={props.checking} id={op} name={`Q${props.id}-${props.data.label}`} value={op} onChange={e => HandleChange(e,props.index)}></input> 
+                        <input type="radio" disabled={props.checking} id={op} name={`Q${props.quid}-${props.data.label}`} value={op} onChange={e => HandleChange(e,props.index)}></input> 
                         {op}
                     </label> 
                 </div>
@@ -103,10 +103,10 @@ function BEL_MultipleSubAnswersSelect(props:any)
         <div>
             <p>{props.data.question}</p>
             {props.data.answers && props.data.answers.map((op:any, k:number) => {
-                return <Options setValue={(e: string, index:number) => HandleSetValue(e, index)} data={op} index={k} id={props.id} checking={props.checking}></Options>
+                return <Options key={`${props.id}-${k}`} setValue={(e: string, index:number) => HandleSetValue(e, index)} data={op} index={k} quid={props.id} checking={props.checking}></Options>
             })}
             {/* <p>Given: {JSON.stringify(ans)}</p> */}
-            <p>{props.checking && <p>Взети точки {CheckingDisplayScore()}</p>}</p>
+            {props.checking && <p>Взети точки {CheckingDisplayScore()}</p>}
         </div>
     )
 }

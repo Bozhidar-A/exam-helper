@@ -32,7 +32,7 @@ function Options(props:IBEL_SingleAnswerOptions)
     return(
         <div>
             {options.map(op => (
-                <div>
+                <div key={`${op}-${props.quid}`}>
                     <label className={UpdateStyle(op)}>
                         <input disabled={props.checking} type="radio" id={`${op}-${props.quid}`} name={`Q${props.quid}`} value={op} onChange={e => HandleChange(e.target.value)}></input> 
                         {op}

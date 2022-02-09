@@ -11,16 +11,16 @@ function Option(props:any){
         props.UpdateScore(event, label)
     }
 
-    return(<div>
+    return(<div key={`${props.label}-${props.id}`}>
         <p>{props.label}</p>
-        {props.option.answers.map((op:any) => {
-            return <div>
+        {props.option.answers.map((op:any, index: number) => {
+            return <div key={`${props.label}-${props.id}-${index}`}>
                 <label>
                 {op.label}
                 <select disabled={props.checking} onChange={e => HandleChange(e.target.value, op.label)}>
                     <option value="">Моля изберете опция</option>
-                    {options.map((op:string) => {
-                        return <option value={op}>{op}</option>
+                    {options.map((op:string, index2:number) => {
+                        return <option key={`${props.label}-${props.id}-${index}-${index2}`} value={op}>{op}</option>
                     })}
                 </select>
                 </label>
@@ -101,8 +101,8 @@ function BEL_Connect(props:IConnect){
     }
 
     return(<div>
-        {props.options && props.options.map((op:any) => {
-            return <Option option={op} UpdateScore={HandleUpdateScore} label={op.label} checking={props.checking}></Option>
+        {props.options && props.options.map((op:any, index:number) => {
+            return <Option key={`${props.id}-${props.type}-${index}`} option={op} UpdateScore={HandleUpdateScore} label={op.label} checking={props.checking}></Option>
         })}
         {/* <p>{JSON.stringify(ans)}</p> */}
         {props.checking && <p>Взети точки {CheckingDisplayScore()}</p>}

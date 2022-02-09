@@ -15,7 +15,7 @@ function Options(props:IBEL_MultipleSubAnswersWriteOptions)
             <p>{props.data.label}</p>
             <p>{props.data.question}</p>
             {props.data.correct.map((correct:string, i:number) =>
-                <div>
+                <div key={`${props.quid}-${i}`}>
                     <p>{i}.</p>
                     <input type="text" disabled={props.checking} onChange={e => HandleChange(e, i, props.data.label)}></input>
                     {props.checking && <p className="bg-lime-500" >{correct}</p>}
@@ -43,7 +43,7 @@ function BEL_MultipleSubAnswersWrite(props:IBEL_MultipleSubAnswersWrite)
         let clone = ans
         clone[label][index] = e;
 
-        if(props.answers.filter((obj:any) => obj.label === label)[0].correct[index].toLowerCase() === e)
+        if(props.answers.filter((obj:any) => obj.label === label)[0].correct[index] === e)
         {
             props.UpdateScore(1);
             setAnsweredCorrect(true);
@@ -66,7 +66,7 @@ function BEL_MultipleSubAnswersWrite(props:IBEL_MultipleSubAnswersWrite)
 
         Object.keys(ans).map((key:string) => {
             props.answers.filter(data => data.label === key)[0].correct.map((an:string) => {
-                if(ans[key].toLowerCase().includes(an))
+                if(ans[key].includes(an))
                 {
                     finScore++;
                 }
@@ -80,7 +80,7 @@ function BEL_MultipleSubAnswersWrite(props:IBEL_MultipleSubAnswersWrite)
         <div>
             <p>{props.question}</p>
             {props.answers && props.answers.map((op:any, k:number) => {
-                return <Options setValue={(e: string, index:number, label:string) => HandleSetValue(e, index, label)} data={op} index={k} id={props.id} checking={props.checking}></Options>
+                return <Options key={`${props.question}-${k}`} setValue={(e: string, index:number, label:string) => HandleSetValue(e, index, label)} data={op} index={k} quid={props.id} checking={props.checking}></Options>
             })}
             {/* <p>Given: {JSON.stringify(ans)}</p> */}
             {props.checking && <p>Взети точки {CheckingDisplayScore()}</p>}

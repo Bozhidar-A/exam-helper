@@ -48,13 +48,6 @@ function TestManager()
         setScore(tmp);
     }
 
-    function StartChecking(){
-        maturaModuleOneRef.current.className = "";
-        maturaModuleTwoRef.current.className = "";
-        maturaModuleThreeRef.current.className = "";
-        setChecking(true);
-    }
-
     function SwitchRenderer(data:APIData[]){
         return(<div>   
             {data.map((q:APIData) => {
@@ -91,10 +84,17 @@ function TestManager()
                    
         </div>)
     }
-    
-    function EndTest(){
+
+    function StartChecking(){
         setMaturaModuleCount(-1);
-        StartChecking();
+        maturaModuleOneRef.current.className = "";
+        maturaModuleTwoRef.current.className = "";
+        maturaModuleThreeRef.current.className = "";
+        setChecking(true);
+    }
+
+    function NextModule(){
+        setMaturaModuleCount(maturaModuleCount + 1)
     }
 
     function ModuleSelector(){
@@ -102,33 +102,49 @@ function TestManager()
         //there must a better way to handle this
 
         let copy = [...testData];
-        var mOne = <div ref={maturaModuleOneRef}>{SwitchRenderer(copy.filter(data => data.qNum <= 30))}</div>
+        var mOne = <div ref={maturaModuleOneRef}>
+            {!checking && <button onClick={() => NextModule()}>Следващ модул</button>}
+            <br />
+            {SwitchRenderer(copy.filter(data => data.qNum <= 30))}
+        </div>
         //gets all with lower or equal qNum to 30
 
-        var mTwo =<div ref={maturaModuleTwoRef} className="hidden" >{SwitchRenderer([copy.filter(data => data.qNum === 22.5)[0], ...copy.filter(data => data.qNum > 30 && data.qNum < 41)])}</div>
+        var mTwo =<div ref={maturaModuleTwoRef} className="hidden" >
+            {!checking && <button onClick={() => NextModule()}>Следващ модул</button>}
+            <br />
+            {SwitchRenderer([copy.filter(data => data.qNum === 22.5)[0], ...copy.filter(data => data.qNum > 30 && data.qNum < 41)])}
+        </div>
         //places the text 22.5 at the beginning and spreads all question except 41
 
         var mThree = <div ref={maturaModuleThreeRef} className="hidden">
-            <button onClick={EndTest}>Този въпрос не може да се провери автоматично. Моля натиснете тук за да предадете.</button>
+            {!checking && <button onClick={() => StartChecking()}>Този въпрос не може да се провери автоматично. Моля натиснете тук за да предадете.</button>}
+            <br />
             {SwitchRenderer([copy.filter(data => data.qNum === 41)][0])}
         </div>
         //gets 41
 
+        let timeout;
+
         switch (maturaModuleCount) {
             case 1:
-                setTimeout(() => {setMaturaModuleCount(2)}, 3600000)//60 minutes
+                clearTimeout(timeout)
+                timeout = setTimeout(() => {setMaturaModuleCount(2)}, 500000)//60 minutes
                 break;
             case 2:
                 maturaModuleOneRef.current.className = "hidden";
                 maturaModuleTwoRef.current.className = "";
-                setTimeout(() => {setMaturaModuleCount(3)}, 3600000)//60 minutes
+                clearTimeout(timeout)
+                timeout = setTimeout(() => {setMaturaModuleCount(3)}, 5000)//60 minutes
                 break;
             case 3:
                 maturaModuleTwoRef.current.className = "hidden";
                 maturaModuleThreeRef.current.className = "";
-                setTimeout(() => {
-                    EndTest()
-                }, 7200000)//120 minutes
+                clearTimeout(timeout)
+                timeout = setTimeout(() => {
+                    StartChecking()
+                }, 5000)//120 minutes
+                //this is catastrophically bad and WILL lead to crash 
+                //REWRITE
                 break;
             default:
                 console.error("maturaModuleCount var is broken. Please refresh.")
@@ -140,6 +156,20 @@ function TestManager()
             {mTwo}
             {mThree}
         </div>)
+    }
+
+    function CalcGradeFromPoints(){
+        if(score < 23){
+            return 2
+        }else if(score < 41){
+            return 3
+        }else if(score < 59){
+            return 4
+        }else if(score < 75){
+            return 5
+        }else{
+            return 6
+        }
     }
 
     function Display()
@@ -155,8 +185,9 @@ function TestManager()
         else
         {
             return(<div>
-                <p>{score}</p>
-                {checking ? null : <button type="button" onClick={StartChecking}>Предай</button>}
+                {/* <p>{score}</p>
+                {checking ? null : <button type="button" onClick={StartChecking}>Предай</button>} */}
+                {checking && <p>Вие изкарахте {score} точки. Вашата оценка е {CalcGradeFromPoints()}</p>}
                 {ModuleSelector()}
             </div>)
         }  

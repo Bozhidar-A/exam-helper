@@ -28,8 +28,7 @@ function Options(props:IBEL_MultipleAnswersOptions)
     return(
         <div>
             {props.options.map((op:string) => (
-                <div>
-                   
+                <div key={`${op}-${props.quid}`}>
                     <label htmlFor={op} className={UpdateStyle(op)}> 
                         <input type="checkbox" disabled={props.checking} id={`${op}-${props.quid}`} name={`Q${props.quid}`} value={op} onChange={e => HandleChange(e.target.value)}></input> 
                         {op}
@@ -98,7 +97,7 @@ function BEL_MultipleAnswers(props:IBEL_MultipleAnswers)
             <p>{props.question}</p>
             <Options UpdateScore={(e: string) => HandleGetValFromOption(e)} options={options} quid={props.id} correct={props.correct} checking={props.checking}></Options>
             {/* <p>Given: {JSON.stringify(ans?.filter(an => an.selected === true))}</p> */}
-            <p>{props.checking && <p>Взети точки {CheckingDisplayScore()}</p>}</p>
+            {props.checking && <p>Взети точки {CheckingDisplayScore()}</p>}
         </div>
     )
 }
