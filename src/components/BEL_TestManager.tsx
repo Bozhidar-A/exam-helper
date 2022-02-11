@@ -128,13 +128,13 @@ function TestManager()
         switch (maturaModuleCount) {
             case 1:
                 clearTimeout(timeout)
-                timeout = setTimeout(() => {setMaturaModuleCount(2)}, 500000)//60 minutes
+                timeout = setTimeout(() => {setMaturaModuleCount(2)}, 3600000)//60 minutes
                 break;
             case 2:
                 maturaModuleOneRef.current.className = "hidden";
                 maturaModuleTwoRef.current.className = "";
                 clearTimeout(timeout)
-                timeout = setTimeout(() => {setMaturaModuleCount(3)}, 5000)//60 minutes
+                timeout = setTimeout(() => {setMaturaModuleCount(3)}, 3600000)//60 minutes
                 break;
             case 3:
                 maturaModuleTwoRef.current.className = "hidden";
@@ -142,7 +142,7 @@ function TestManager()
                 clearTimeout(timeout)
                 timeout = setTimeout(() => {
                     StartChecking()
-                }, 5000)//120 minutes
+                }, 7200000)//120 minutes
                 //this is catastrophically bad and WILL lead to crash 
                 //REWRITE
                 break;
@@ -187,7 +187,7 @@ function TestManager()
             return(<div>
                 {/* <p>{score}</p>
                 {checking ? null : <button type="button" onClick={StartChecking}>Предай</button>} */}
-                {checking && <p>Вие изкарахте {score} точки. Вашата оценка е {CalcGradeFromPoints()}</p>}
+                {checking && <p>Вие изкарахте {score} точки. Вашата оценка е {CalcGradeFromPoints()}!</p>}
                 {ModuleSelector()}
             </div>)
         }  
