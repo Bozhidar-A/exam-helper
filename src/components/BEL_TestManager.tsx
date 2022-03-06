@@ -12,6 +12,7 @@ import { Oval } from "react-loader-spinner";
 import IAPI, { APIData } from "../interfaces/IAPI";
 import BEL_Works from "./BEL_Works";
 import BEL_Uncheckable from "./BEL_Uncheckable";
+import { useLocation } from "react-router-dom";
 
 function TestManager()
 {
@@ -26,8 +27,13 @@ function TestManager()
     const [loading, setLoading] = useState(true);
     const [APIError, setAPIError] = useState(false);
 
+    const location = useLocation();
+    // console.log(location.state)
+
     useEffect(() => {
-        GetMaturaYearSession(2020,1).then((result:IAPI) => {
+        // @ts-ignore
+        const{year, session} = location.state
+        GetMaturaYearSession(parseInt(year),parseInt(session)).then((result:IAPI) => {
             if(result.status === "OK"){
                 setTestData(result.data.sort((firstItem, secondItem) => firstItem.qNum - secondItem.qNum))
                 //sorts by qNum
