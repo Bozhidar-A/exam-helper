@@ -3,15 +3,15 @@ import { Link } from "react-router-dom";
 
 export default function Selector(){
     const years = [2020]
-    const sessions = ["first"]
+    const sessions = [1]
 
     const [selectedYear, setSelectedYear] = useState<string>()
     const [selectedSession, setSelectedSession] = useState<string>()
 
-    function SessionStringToInt(session:string){
+    function SessionStringToInt(session:number){
         switch (session) {
-            case "first":
-                return 1        
+            case 1:
+                return "първа"        
             default:
                 break;
         }
@@ -30,13 +30,13 @@ export default function Selector(){
         <select onChange={(e) => setSelectedSession(e.target.value)}>
             <option></option>
             {sessions.map(session => {
-                return <option value={SessionStringToInt(session)}>{session}</option>
+                return <option value={session}>{SessionStringToInt(session)}</option>
             })}
         </select>
         <br />
         {selectedYear == null || selectedSession == null ? <p>Моля изберете коя година и сесия бихте искали да правите</p> : 
         <Link
-            to={`/exame`}
+            to={`/exam`}
             state={{ year: selectedYear, session: selectedSession }}
         >
             <button type="button">Започнете теста</button>

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import IBEL_WritePoints from "../interfaces/IBEL_WritePoints";
+import PointsFromQuestion from "./PointsFromQuestion";
 
 function BEL_WritePoints(props:IBEL_WritePoints){
 
@@ -56,7 +57,7 @@ function BEL_WritePoints(props:IBEL_WritePoints){
         <input type="text" disabled={props.checking} onChange={e => HandleChange(e.target.value)}></input>
         {props.checking && <div>
             <textarea className="bg-lime-500" disabled={true} value={props.correct.join(" | ")}></textarea>
-            <p>Взети точки {CheckingDisplayScore()}</p>
+            <PointsFromQuestion points={CheckingDisplayScore()}></PointsFromQuestion>
         </div>}
     </div>)
 }

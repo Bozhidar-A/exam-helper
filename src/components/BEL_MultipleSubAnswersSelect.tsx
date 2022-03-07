@@ -1,5 +1,6 @@
 import { FormEvent, useEffect, useState } from "react";
 import IMultipleSubAnswersSelect from "../interfaces/IBEL_MultipleSubAnswersSelect";
+import PointsFromQuestion from "./PointsFromQuestion";
 
 interface IOptions{
     data:IMultipleSubAnswersSelect,
@@ -106,7 +107,7 @@ function BEL_MultipleSubAnswersSelect(props:any)
                 return <Options key={`${props.id}-${k}`} setValue={(e: string, index:number) => HandleSetValue(e, index)} data={op} index={k} quid={props.id} checking={props.checking}></Options>
             })}
             {/* <p>Given: {JSON.stringify(ans)}</p> */}
-            {props.checking && <p>Взети точки {CheckingDisplayScore()}</p>}
+            {props.checking && <PointsFromQuestion points={CheckingDisplayScore()}></PointsFromQuestion>}
         </div>
     )
 }

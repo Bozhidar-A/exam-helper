@@ -2,6 +2,7 @@ import { FormEvent, useEffect, useState } from "react";
 import { isPropertySignature } from "typescript";
 import IConnect from "../interfaces/IBEL_Connect";
 import IBEL_IConnectState from "../interfaces/IBEL_IConnectState";
+import PointsFromQuestion from "./PointsFromQuestion";
 
 function Option(props:any){
     let options = [...props.option.wrong, props.option.answers[0].correct, props.option.answers[1].correct].sort()
@@ -104,8 +105,7 @@ function BEL_Connect(props:IConnect){
         {props.options && props.options.map((op:any, index:number) => {
             return <Option key={`${props.id}-${props.type}-${index}`} option={op} UpdateScore={HandleUpdateScore} label={op.label} checking={props.checking}></Option>
         })}
-        {/* <p>{JSON.stringify(ans)}</p> */}
-        {props.checking && <p>Взети точки {CheckingDisplayScore()}</p>}
+        {props.checking && <PointsFromQuestion points={CheckingDisplayScore()}></PointsFromQuestion>}
     </div>)
 }
 

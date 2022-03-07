@@ -29,7 +29,7 @@ function BEL_FindMissingPunctuation(props:any){
         {props.checking && 
             <div>
                 <textarea className="bg-lime-500" disabled={true} value={props.data.correct}></textarea>
-                {props.checking && <p>Взети точки {inputText === props.data.correct ? 5 : 0}</p>}
+                {props.checking && <p>От този въпрос вие взехте {inputText === props.data.correct ? 5 : 0} точки</p>}
                 {/* TODO write better points get for this */}
             </div>}
     </div>)

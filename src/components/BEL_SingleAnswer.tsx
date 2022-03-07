@@ -1,6 +1,7 @@
 import { useState } from "react";
 import IBEL_SingleAnswer from "../interfaces/IBEL_SingleAnswer";
 import IBEL_SingleAnswerOptions from "../interfaces/IBEL_SingleAnswerOptions";
+import PointsFromQuestion from "./PointsFromQuestion";
 
 function Options(props:IBEL_SingleAnswerOptions)
 {
@@ -86,7 +87,7 @@ function BEL_SingleAnswer(props:IBEL_SingleAnswer)
         <div>
             <pre dangerouslySetInnerHTML={{ __html: props.question.replace("\n", "<br/>") }}></pre>
             <Options UpdateScore={UpdateScore} correct={props.correct} wrong={props.wrong} quid={props.id} checking={props.checking}></Options>
-            {props.checking && <p>Взети точки {CheckingDisplayScore()}</p>}
+            {props.checking && <PointsFromQuestion points={CheckingDisplayScore()}></PointsFromQuestion>}
         </div>
     )
 }

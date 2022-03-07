@@ -2,6 +2,7 @@ import { FormEvent, useEffect, useState } from "react";
 import IBEL_MultipleAnswers from "../interfaces/IBEL_MultipleAnswers";
 import IBEL_MultipleAnswersOptions from "../interfaces/IBEL_MultipleAnswersOptions";
 import IMultipleAnswers from "../interfaces/IMultipleAnswers";
+import PointsFromQuestion from "./PointsFromQuestion";
 
 function Options(props:IBEL_MultipleAnswersOptions)
 {
@@ -97,7 +98,7 @@ function BEL_MultipleAnswers(props:IBEL_MultipleAnswers)
             <p>{props.question}</p>
             <Options UpdateScore={(e: string) => HandleGetValFromOption(e)} options={options} quid={props.id} correct={props.correct} checking={props.checking}></Options>
             {/* <p>Given: {JSON.stringify(ans?.filter(an => an.selected === true))}</p> */}
-            {props.checking && <p>Взети точки {CheckingDisplayScore()}</p>}
+            {props.checking && <PointsFromQuestion points={CheckingDisplayScore()}></PointsFromQuestion>}
         </div>
     )
 }

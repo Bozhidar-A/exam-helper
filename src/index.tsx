@@ -8,13 +8,13 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
-import TestManager from './components/BEL_TestManager';
+import ExamManager from './components/BEL_ExamManager';
 
 ReactDOM.render(
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<App />} />
-      <Route path="/exame" element={ <TestManager/>} />
+      <Route path="/exam" element={ <ExamManager/>} />
     </Routes>
   </BrowserRouter>,
   document.getElementById('root')

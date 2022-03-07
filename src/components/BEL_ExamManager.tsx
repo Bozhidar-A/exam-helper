@@ -13,8 +13,9 @@ import IAPI, { APIData } from "../interfaces/IAPI";
 import BEL_Works from "./BEL_Works";
 import BEL_Uncheckable from "./BEL_Uncheckable";
 import { useLocation } from "react-router-dom";
+import styles from "../css/main.module.css"
 
-function TestManager()
+function ExamManager()
 {
     const [score, setScore] = useState(0);
     const [checking, setChecking] = useState(false)
@@ -109,6 +110,7 @@ function TestManager()
 
         let copy = [...testData];
         var mOne = <div ref={maturaModuleOneRef}>
+            <p>Модул №1</p>
             {!checking && <button onClick={() => NextModule()}>Следващ модул</button>}
             <br />
             {SwitchRenderer(copy.filter(data => data.qNum <= 30))}
@@ -116,6 +118,7 @@ function TestManager()
         //gets all with lower or equal qNum to 30
 
         var mTwo =<div ref={maturaModuleTwoRef} className="hidden" >
+            <p>Модул №2</p>
             {!checking && <button onClick={() => NextModule()}>Следващ модул</button>}
             <br />
             {SwitchRenderer([copy.filter(data => data.qNum === 22.5)[0], ...copy.filter(data => data.qNum > 30 && data.qNum < 41)])}
@@ -123,6 +126,7 @@ function TestManager()
         //places the text 22.5 at the beginning and spreads all question except 41
 
         var mThree = <div ref={maturaModuleThreeRef} className="hidden">
+            <p>Модул №3</p>
             {!checking && <button onClick={() => StartChecking()}>Този въпрос не може да се провери автоматично. Моля натиснете тук за да предадете.</button>}
             <br />
             {SwitchRenderer([copy.filter(data => data.qNum === 41)][0])}
@@ -181,7 +185,9 @@ function TestManager()
     function Display()
     {
         if(loading){
-            return(<Oval color="#04cf22" height={100} width={100} ariaLabel='loading'/>)
+            return(<div className={styles.center_screen}>
+                    <Oval color="#04cf22" height={100} width={100} ariaLabel='loading'/>
+                </div>)
         }
         else if(APIError){
             setTimeout(() => window.location.reload, 3000);
@@ -191,17 +197,15 @@ function TestManager()
         else
         {
             return(<div>
-                {/* <p>{score}</p>
-                {checking ? null : <button type="button" onClick={StartChecking}>Предай</button>} */}
-                {checking && <p>Вие изкарахте {score} точки. Вашата оценка е {CalcGradeFromPoints()}!</p>}
+                {checking && <p>Общо имате {score} точки. Вашата оценка е {CalcGradeFromPoints()}!</p>}
                 {ModuleSelector()}
             </div>)
         }  
     }
 
-    return(<div>
+    return(<div className={styles.center_text}>
         {Display()}
     </div>)
 }
 
-export default TestManager;
+export default ExamManager;

@@ -1,7 +1,6 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import TestManager from './components/BEL_TestManager';
 import Selector from './components/Selector';
 
 function App() {

@@ -1,6 +1,7 @@
 import { FormEvent, useEffect, useState } from "react";
 import IBEL_MultipleSubAnswersWriteOptions from "../interfaces/IBEL_MultipleSubAnswersWriteOptions";
 import IBEL_MultipleSubAnswersWrite from "../interfaces/IBEL_MultipleSubAnswersWrite";
+import PointsFromQuestion from "./PointsFromQuestion";
 
 function Options(props:IBEL_MultipleSubAnswersWriteOptions)
 {
@@ -83,7 +84,7 @@ function BEL_MultipleSubAnswersWrite(props:IBEL_MultipleSubAnswersWrite)
                 return <Options key={`${props.question}-${k}`} setValue={(e: string, index:number, label:string) => HandleSetValue(e, index, label)} data={op} index={k} quid={props.id} checking={props.checking}></Options>
             })}
             {/* <p>Given: {JSON.stringify(ans)}</p> */}
-            {props.checking && <p>Взети точки {CheckingDisplayScore()}</p>}
+            {props.checking && <PointsFromQuestion points={CheckingDisplayScore()}></PointsFromQuestion>}
         </div>
     )
 }
