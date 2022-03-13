@@ -6,7 +6,7 @@ function BEL_Uncheckable(props:IBEL_Uncheckable){
     const [inputText, setInputText] = useState("")
 
     return(<div>
-        <p>{props.question}</p>
+        <pre dangerouslySetInnerHTML={{ __html: props.question.replace("\n", "<br/>") }}></pre>
         <textarea disabled={props.checking} onChange={e => setInputText(e.target.value)}></textarea>
         {props.checking && <div>
             <p>Този въпрос нямам лесен за показване отговор. Моля свържете се с учител който може да го провери.</p>
