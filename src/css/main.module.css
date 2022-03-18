@@ -10,3 +10,24 @@
   text-align: center;
   min-height: 100vh;
 }
+
+.background_red {
+  background-color: red;
+}
+
+.sticky_eader {
+  position: sticky;
+  top: 0;
+  background-color: #8b93a5;
+}
+
+.AlignLeftWithPadding {
+  display: flex;
+  justify-content: left;
+
+  padding-left: 2rem;
+}
+
+.EveryExamComponent {
+  padding-bottom: 2rem;
+}

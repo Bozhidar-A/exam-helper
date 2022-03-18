@@ -14,7 +14,6 @@ import BEL_Works from "./BEL_Works";
 import BEL_Uncheckable from "./BEL_Uncheckable";
 import { useLocation } from "react-router-dom";
 import styles from "../css/main.module.css"
-import Countdown from 'react-countdown';
 import CountdownExam from "./CountdownExam";
 
 function ExamManager()
@@ -35,7 +34,6 @@ function ExamManager()
 
     const min60 = 3600000;
     const min120 = 7200000;
-    // const [countdownTime, setCountdownTime] = useState(min60);
     const memorizeCountdown = useMemo(() => <CountdownExam module={maturaModuleCount} min60={min60} min120={min120}></CountdownExam>, [maturaModuleCount])
 
     useEffect(() => {
@@ -146,14 +144,12 @@ function ExamManager()
             case 1:
                 clearTimeout(timeout)
                 timeout = setTimeout(() => {setMaturaModuleCount(2)}, min60)//60 minutes
-                // setCountdownTime(min60);
                 break;
             case 2:
                 maturaModuleOneRef.current.className = "hidden";
                 maturaModuleTwoRef.current.className = "";
                 clearTimeout(timeout)
                 timeout = setTimeout(() => {setMaturaModuleCount(3)}, min60)//60 minutes
-                // setCountdownTime(min60);
                 break;
             case 3:
                 maturaModuleTwoRef.current.className = "hidden";
@@ -162,7 +158,6 @@ function ExamManager()
                 timeout = setTimeout(() => {
                     StartChecking()
                 }, min120)//120 minutes
-                // setCountdownTime(min120);
                 //this is catastrophically bad and WILL lead to crash 
                 //REWRITE
                 break;
@@ -215,9 +210,10 @@ function ExamManager()
         }  
     }
 
-    return(<div className={styles.center_text}>
-        {!checking && !loading ? memorizeCountdown : null}
-        {Display()}
+    return(<div>
+        <div className={`${styles.sticky_eader} ${styles.center_text}`}>{!checking && !loading ? memorizeCountdown : null}</div>
+        <div className={styles.AlignLeftWithPadding}>{Display()}</div>
+        
     </div>)
 }
 
