@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import BEL_MultipleAnswers from "./BEL_MultipleAnswers";
 import BEL_MultipleSubAnswersSelect from "./BEL_MultipleSubAnswersSelect";
 import BEL_SingleAnswer from "./BEL_SingleAnswer";
@@ -14,6 +14,8 @@ import BEL_Works from "./BEL_Works";
 import BEL_Uncheckable from "./BEL_Uncheckable";
 import { useLocation } from "react-router-dom";
 import styles from "../css/main.module.css"
+import Countdown from 'react-countdown';
+import CountdownExam from "./CountdownExam";
 
 function ExamManager()
 {
@@ -30,6 +32,11 @@ function ExamManager()
 
     const location = useLocation();
     // console.log(location.state)
+
+    const min60 = 3600000;
+    const min120 = 7200000;
+    // const [countdownTime, setCountdownTime] = useState(min60);
+    const memorizeCountdown = useMemo(() => <CountdownExam module={maturaModuleCount} min60={min60} min120={min120}></CountdownExam>, [maturaModuleCount])
 
     useEffect(() => {
         // @ts-ignore
@@ -138,13 +145,15 @@ function ExamManager()
         switch (maturaModuleCount) {
             case 1:
                 clearTimeout(timeout)
-                timeout = setTimeout(() => {setMaturaModuleCount(2)}, 3600000)//60 minutes
+                timeout = setTimeout(() => {setMaturaModuleCount(2)}, min60)//60 minutes
+                // setCountdownTime(min60);
                 break;
             case 2:
                 maturaModuleOneRef.current.className = "hidden";
                 maturaModuleTwoRef.current.className = "";
                 clearTimeout(timeout)
-                timeout = setTimeout(() => {setMaturaModuleCount(3)}, 3600000)//60 minutes
+                timeout = setTimeout(() => {setMaturaModuleCount(3)}, min60)//60 minutes
+                // setCountdownTime(min60);
                 break;
             case 3:
                 maturaModuleTwoRef.current.className = "hidden";
@@ -152,9 +161,12 @@ function ExamManager()
                 clearTimeout(timeout)
                 timeout = setTimeout(() => {
                     StartChecking()
-                }, 7200000)//120 minutes
+                }, min120)//120 minutes
+                // setCountdownTime(min120);
                 //this is catastrophically bad and WILL lead to crash 
                 //REWRITE
+                break;
+            case -1:
                 break;
             default:
                 console.error("maturaModuleCount var is broken. Please refresh.")
@@ -204,6 +216,7 @@ function ExamManager()
     }
 
     return(<div className={styles.center_text}>
+        {!checking && !loading ? memorizeCountdown : null}
         {Display()}
     </div>)
 }
