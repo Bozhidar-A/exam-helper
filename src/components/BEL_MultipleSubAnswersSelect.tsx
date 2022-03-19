@@ -1,6 +1,8 @@
-import { FormEvent, useEffect, useState } from "react";
+import React from "react";
+import { FormEvent, useState } from "react";
 import IMultipleSubAnswersSelect from "../interfaces/IBEL_MultipleSubAnswersSelect";
 import PointsFromQuestion from "./PointsFromQuestion";
+import styles from "../css/main.module.css"
 
 interface IOptions{
     data:IMultipleSubAnswersSelect,
@@ -66,8 +68,8 @@ function BEL_MultipleSubAnswersSelect(props:any)
         {
             //very bad
             //this works because when a radio is already selected the onChange event doesnt fire
-            //we simply check if the allready given answers is correct
-            //if it is and user is chnage to a wrong one tak away point
+            //we simply check if the already given answers is correct
+            //if it is and user is change to a wrong one take away point
             //if not do nothing
             if(clone[index] === props.data.answers[index].correct)
             {
@@ -101,16 +103,15 @@ function BEL_MultipleSubAnswersSelect(props:any)
     }
 
     return(
-        <div>
+        <div className={styles.EveryExamComponent}>
             <p>{props.data.question}</p>
             {props.data.answers && props.data.answers.map((op:any, k:number) => {
                 return <Options key={`${props.id}-${k}`} setValue={(e: string, index:number) => HandleSetValue(e, index)} data={op} index={k} quid={props.id} checking={props.checking}></Options>
             })}
-            {/* <p>Given: {JSON.stringify(ans)}</p> */}
             {props.checking && <PointsFromQuestion points={CheckingDisplayScore()}></PointsFromQuestion>}
         </div>
     )
 }
 
-export default BEL_MultipleSubAnswersSelect;
+export default React.memo(BEL_MultipleSubAnswersSelect);
 

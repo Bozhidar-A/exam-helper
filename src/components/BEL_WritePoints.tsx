@@ -1,6 +1,8 @@
+import React from "react";
 import { useState } from "react";
 import IBEL_WritePoints from "../interfaces/IBEL_WritePoints";
 import PointsFromQuestion from "./PointsFromQuestion";
+import styles from "../css/main.module.css"
 
 function BEL_WritePoints(props:IBEL_WritePoints){
 
@@ -51,15 +53,15 @@ function BEL_WritePoints(props:IBEL_WritePoints){
         return finScore;
     }
 
-    return(<div>
+    return(<div className={styles.EveryExamComponent}>
         <p>{props.question}</p>
         <p>Разделете отговорите си със символа |</p>
         <input type="text" disabled={props.checking} onChange={e => HandleChange(e.target.value)}></input>
         {props.checking && <div>
-            <textarea className="bg-lime-500" disabled={true} value={props.correct.join(" | ")}></textarea>
+            <textarea className={`"bg-lime-500 ${styles.TextareaMaxWidth}`} disabled={true} value={props.correct.join(" | ")}></textarea>
             <PointsFromQuestion points={CheckingDisplayScore()}></PointsFromQuestion>
         </div>}
     </div>)
 }
 
-export default BEL_WritePoints;
+export default React.memo(BEL_WritePoints);

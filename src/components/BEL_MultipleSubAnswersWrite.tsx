@@ -2,6 +2,8 @@ import { FormEvent, useEffect, useState } from "react";
 import IBEL_MultipleSubAnswersWriteOptions from "../interfaces/IBEL_MultipleSubAnswersWriteOptions";
 import IBEL_MultipleSubAnswersWrite from "../interfaces/IBEL_MultipleSubAnswersWrite";
 import PointsFromQuestion from "./PointsFromQuestion";
+import React from "react";
+import styles from "../css/main.module.css"
 
 function Options(props:IBEL_MultipleSubAnswersWriteOptions)
 {
@@ -78,16 +80,15 @@ function BEL_MultipleSubAnswersWrite(props:IBEL_MultipleSubAnswersWrite)
     }
 
     return(
-        <div>
+        <div className={styles.EveryExamComponent}>
             <p>{props.question}</p>
             {props.answers && props.answers.map((op:any, k:number) => {
                 return <Options key={`${props.question}-${k}`} setValue={(e: string, index:number, label:string) => HandleSetValue(e, index, label)} data={op} index={k} quid={props.id} checking={props.checking}></Options>
             })}
-            {/* <p>Given: {JSON.stringify(ans)}</p> */}
             {props.checking && <PointsFromQuestion points={CheckingDisplayScore()}></PointsFromQuestion>}
         </div>
     )
 }
 
-export default BEL_MultipleSubAnswersWrite;
+export default React.memo(BEL_MultipleSubAnswersWrite);
 

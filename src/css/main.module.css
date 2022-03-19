@@ -31,3 +31,8 @@
 .EveryExamComponent {
   padding-bottom: 2rem;
 }
+
+.TextareaMaxWidth {
+  width: 100%;
+  max-width: 100%;
+}

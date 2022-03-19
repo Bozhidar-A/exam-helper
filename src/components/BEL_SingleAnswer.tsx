@@ -1,7 +1,9 @@
+import React from "react";
 import { useState } from "react";
 import IBEL_SingleAnswer from "../interfaces/IBEL_SingleAnswer";
 import IBEL_SingleAnswerOptions from "../interfaces/IBEL_SingleAnswerOptions";
 import PointsFromQuestion from "./PointsFromQuestion";
+import styles from "../css/main.module.css"
 
 function Options(props:IBEL_SingleAnswerOptions)
 {
@@ -84,7 +86,7 @@ function BEL_SingleAnswer(props:IBEL_SingleAnswer)
     }
 
     return(
-        <div>
+        <div className={styles.EveryExamComponent}>
             <pre dangerouslySetInnerHTML={{ __html: props.question.replace("\n", "<br/>") }}></pre>
             <Options UpdateScore={UpdateScore} correct={props.correct} wrong={props.wrong} quid={props.id} checking={props.checking}></Options>
             {props.checking && <PointsFromQuestion points={CheckingDisplayScore()}></PointsFromQuestion>}
@@ -92,4 +94,4 @@ function BEL_SingleAnswer(props:IBEL_SingleAnswer)
     )
 }
 
-export default BEL_SingleAnswer;
+export default React.memo(BEL_SingleAnswer);

@@ -1,8 +1,10 @@
+import React from "react";
 import { FormEvent, useEffect, useState } from "react";
 import IBEL_MultipleAnswers from "../interfaces/IBEL_MultipleAnswers";
 import IBEL_MultipleAnswersOptions from "../interfaces/IBEL_MultipleAnswersOptions";
 import IMultipleAnswers from "../interfaces/IMultipleAnswers";
 import PointsFromQuestion from "./PointsFromQuestion";
+import styles from "../css/main.module.css"
 
 function Options(props:IBEL_MultipleAnswersOptions)
 {
@@ -94,13 +96,12 @@ function BEL_MultipleAnswers(props:IBEL_MultipleAnswers)
     }
 
     return(
-        <div>
+        <div className={styles.EveryExamComponent}>
             <p>{props.question}</p>
             <Options UpdateScore={(e: string) => HandleGetValFromOption(e)} options={options} quid={props.id} correct={props.correct} checking={props.checking}></Options>
-            {/* <p>Given: {JSON.stringify(ans?.filter(an => an.selected === true))}</p> */}
             {props.checking && <PointsFromQuestion points={CheckingDisplayScore()}></PointsFromQuestion>}
         </div>
     )
 }
 
-export default BEL_MultipleAnswers;
+export default React.memo(BEL_MultipleAnswers);

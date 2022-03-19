@@ -1,8 +1,9 @@
-import { FormEvent, useEffect, useState } from "react";
-import { isPropertySignature } from "typescript";
+import React from "react";
+import { useEffect, useState } from "react";
 import IConnect from "../interfaces/IBEL_Connect";
 import IBEL_IConnectState from "../interfaces/IBEL_IConnectState";
 import PointsFromQuestion from "./PointsFromQuestion";
+import styles from "../css/main.module.css"
 
 function Option(props:any){
     let options = [...props.option.wrong, props.option.answers[0].correct, props.option.answers[1].correct].sort()
@@ -101,7 +102,7 @@ function BEL_Connect(props:IConnect){
         return finScore;
     }
 
-    return(<div>
+    return(<div className={styles.EveryExamComponent}>
         {props.options && props.options.map((op:any, index:number) => {
             return <Option key={`${props.id}-${props.type}-${index}`} option={op} UpdateScore={HandleUpdateScore} label={op.label} checking={props.checking}></Option>
         })}
@@ -109,4 +110,4 @@ function BEL_Connect(props:IConnect){
     </div>)
 }
 
-export default BEL_Connect;
+export default React.memo(BEL_Connect);

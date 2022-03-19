@@ -1,4 +1,6 @@
+import React from "react";
 import { useState } from "react";
+import styles from "../css/main.module.css"
 
 function BEL_FindMissingPunctuation(props:any){
 
@@ -23,12 +25,15 @@ function BEL_FindMissingPunctuation(props:any){
         }
     }
 
-    return(<div>
+    return(<div className={styles.EveryExamComponent}>
         <p>{props.data.question}</p>
-        <textarea disabled={props.checking} onChange={e => {HandleChange(e.target.value)}} value={props.data.wrong}></textarea>
+        <br />
+        <pre dangerouslySetInnerHTML={{ __html: props.data.wrong.replace("\n", "<br/>") }}></pre>
+        <br />
+        <textarea className={styles.TextareaMaxWidth} disabled={props.checking} onChange={e => {HandleChange(e.target.value)}}></textarea>
         {props.checking && 
             <div>
-                <textarea className="bg-lime-500" disabled={true} value={props.data.correct}></textarea>
+                <textarea className={`bg-lime-500 ${styles.TextareaMaxWidth}`} disabled={true} value={props.data.correct}></textarea>
                 {props.checking && <p>От този въпрос вие взехте {inputText === props.data.correct ? 5 : 0} точки</p>}
                 {/* TODO write better points get for this */}
             </div>}
