@@ -12,18 +12,22 @@ function BEL_FindMissingPunctuation(props:any){
     {
         setInputText(text);
 
-        if(props.data.correct === text)
-        {
-            props.UpdateScore(5);
-            setGivenPts(5);
-        }
-        else{
-            if(givenPts > 0)
-            {
-                props.UpdateScore(-5); // -Math.abs(num);
-                setGivenPts(0);
+        let pts = 0;
+
+        props.data.punctuation.map((pu:any) => {
+            if(text[pu.index] === pu.symbol){
+                pts++;
             }
+        })
+
+        props.UpdateScore(-Math.abs(givenPts));
+
+        if(pts !== 0)//this is needed or setState refused to work properly and will ignore the calls in TestManager
+        {
+            props.UpdateScore(pts);
         }
+
+        setGivenPts(pts);
     }
 
     function FormatCorrectText() {
