@@ -22,7 +22,7 @@ function BEL_FindMissingPunctuation(props:any){
 
         props.UpdateScore(-Math.abs(givenPts));
 
-        if(pts !== 0)//this is needed or setState refused to work properly and will ignore the calls in TestManager
+        if(pts !== 0)//this is needed or setState refused to work properly and will ignore the calls in ExamManager
         {
             props.UpdateScore(pts);
         }
@@ -58,13 +58,11 @@ function BEL_FindMissingPunctuation(props:any){
         <pre dangerouslySetInnerHTML={{ __html: props.data.wrong.replace("\n", "<br/>") }}></pre>
         <br />
         <textarea className={styles.TextareaMaxWidth} disabled={props.checking} onChange={e => {HandleChange(e.target.value)}}></textarea>
+        {/* I should disable pasting here as you have to rewrite the whole thing on the exam, but i won't */}
         {props.checking && 
             <div>
                 <pre className={`bg-lime-500`} dangerouslySetInnerHTML={{ __html: FormatCorrectText() }}></pre>
                 <PointsFromQuestion points={CheckingDisplayScore()}></PointsFromQuestion>
-                {/* <textarea className={`bg-lime-500 ${styles.TextareaMaxWidth}`} disabled={true} value={props.data.correct}></textarea>
-                {props.checking && <p>От този въпрос вие взехте {inputText === props.data.correct ? 5 : 0} точки</p>} */}
-                {/* TODO write better points get for this */}
             </div>}
     </div>)
 }

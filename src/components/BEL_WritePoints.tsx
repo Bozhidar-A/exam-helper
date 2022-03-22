@@ -29,7 +29,7 @@ function BEL_WritePoints(props:IBEL_WritePoints){
 
         props.UpdateScore(-Math.abs(givenPts)); //supposedly this is better then *-1
 
-        if(pts !== 0)//this is needed or setState refused to work properly and will ignore the calls in TestManager
+        if(pts !== 0)//this is needed or setState refused to work properly and will ignore the calls in ExamManager
         {
             props.UpdateScore(pts);
         }
