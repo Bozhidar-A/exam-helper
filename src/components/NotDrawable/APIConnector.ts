@@ -6,7 +6,7 @@ export async function GetMaturaYearSession(year:number, session:number)
     var result:IAPI = {} as IAPI
  
     try{
-        const query = await db.collection("maturasData").where("year", "==", year)
+        const query = await db.collection("maturasData2").where("year", "==", year)
         .where("session", "==", session)
         .get()    
 

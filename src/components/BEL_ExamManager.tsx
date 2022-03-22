@@ -204,7 +204,7 @@ function ExamManager()
         else
         {
             return(<div>
-                {checking && <p>Общо имате {score} точки. Вашата оценка е {CalcGradeFromPoints()}!</p>}
+                {checking && <p>Общо имате {score} {score === 1 ? "точка" : "точки"}. Вашата оценка е {CalcGradeFromPoints()}!</p>}
                 {ModuleSelector()}
             </div>)
         }  
