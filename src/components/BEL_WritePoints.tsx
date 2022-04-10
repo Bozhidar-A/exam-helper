@@ -58,7 +58,7 @@ function BEL_WritePoints(props:IBEL_WritePoints){
         <p>Разделете отговорите си със символа |</p>
         <input type="text" disabled={props.checking} onChange={e => HandleChange(e.target.value)}></input>
         {props.checking && <div>
-            <textarea className={`"bg-lime-500 ${styles.TextareaMaxWidth}`} disabled={true} value={props.correct.join(" | ")}></textarea>
+            <textarea className={`"${styles.TextareaMaxWidth}`} disabled={true} value={props.correct.join(" | ")}></textarea>
             <PointsFromQuestion points={CheckingDisplayScore()}></PointsFromQuestion>
         </div>}
     </div>)
