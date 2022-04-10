@@ -66,7 +66,7 @@ function ExamManager()
                 try{
                     switch (q.type) {
                         case "BEL_Uncheckable":
-                            return <BEL_Uncheckable key={q.id} question={q.question!} checking={checking}></BEL_Uncheckable>
+                            return <BEL_Uncheckable key={q.id} question={q.question!} year={q.year} session={q.session} checking={checking}></BEL_Uncheckable>
                         case "BEL_Works":
                             return <BEL_Works key={q.id} textsArr={q.textsArr!}></BEL_Works> 
                         case "BEL_SingleAnswer":
