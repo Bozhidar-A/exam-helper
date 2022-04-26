@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import BEL_MultipleAnswers from "./BEL_MultipleAnswers";
 import BEL_MultipleSubAnswersSelect from "./BEL_MultipleSubAnswersSelect";
-import BEL_SingleAnswer from "./BEL_SingleAnswer";
+import BEL_SingleAnswerMemorized from "./BEL_SingleAnswer";
 import BEL_FindMissingPunctuation from "./BEL_FindMissingPunctuation";
 import BEL_MultipleSubAnswersWrite from "./BEL_MultipleSubAnswersWrite";
 import BEL_Connect from "./BEL_Connect";
@@ -47,8 +47,9 @@ function ExamManager()
                 setLoading(false);
             }
             else{
-                console.error(result.error)
+                console.error(result.error);
                 setAPIError(true);
+                setLoading(false);
             }
         })
     }, [])
@@ -70,7 +71,7 @@ function ExamManager()
                         case "BEL_Works":
                             return <BEL_Works key={q.id} textsArr={q.textsArr!}></BEL_Works> 
                         case "BEL_SingleAnswer":
-                            return <BEL_SingleAnswer key={q.id} id={q.id} qNum={q.qNum} question={q.question!} wrong={q.wrong as string[]} correct={q.correct as string} UpdateScore={UpdateScore} checking={checking}></BEL_SingleAnswer>
+                            return <BEL_SingleAnswerMemorized key={q.id} id={q.id} qNum={q.qNum} question={q.question!} wrong={q.wrong as string[]} correct={q.correct as string} UpdateScore={UpdateScore} checking={checking}></BEL_SingleAnswerMemorized>
                         case "BEL_MultipleAnswers":
                             return <BEL_MultipleAnswers key={q.id} id={q.id} qNum={q.qNum} question={q.question!} wrong={q.wrong! as string[]} correct={q.correct! as string[]} UpdateScore={UpdateScore} checking={checking}></BEL_MultipleAnswers>
                         case "BEL_MultipleSubAnswersSelect":
@@ -197,23 +198,22 @@ function ExamManager()
                 </div>)
         }
         else if(APIError){
-            setTimeout(() => window.location.reload, 3000);
+            // setTimeout(() => window.location.reload, 3000);
 
-            return(<p>An error has occured with the API. The page will auomaticly refresh in 3 seconds</p>)
+            return(<p>An error has occured with the API. Please try again.</p>)
         }
         else
         {
             return(<div>
-                {checking && <p>Общо имате {score} {score === 1 ? "точка" : "точки"}. Вашата оценка е {CalcGradeFromPoints()}!</p>}
+                <div className={`${styles.sticky_eader} ${styles.center_text}`}>{!checking && !loading ? memorizeCountdown : null}</div>
+                {checking && <p>Общо имате {score} точки. Вашата оценка е {CalcGradeFromPoints()}!</p>}
                 {ModuleSelector()}
             </div>)
         }  
     }
 
     return(<div>
-        <div className={`${styles.sticky_eader} ${styles.center_text}`}>{!checking && !loading ? memorizeCountdown : null}</div>
         <div className={styles.AlignLeftWithPadding}>{Display()}</div>
-        
     </div>)
 }
 

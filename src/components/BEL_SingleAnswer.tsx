@@ -94,4 +94,11 @@ function BEL_SingleAnswer(props:IBEL_SingleAnswer)
     )
 }
 
-export default React.memo(BEL_SingleAnswer);
+const BEL_SingleAnswerMemorized = React.memo(BEL_SingleAnswer, (prevProps, nextProps) => {
+    if (prevProps.checking === nextProps.checking) {
+      return true; // props are equal
+    }
+    return false; // props are not equal -> update the component
+})
+
+export default BEL_SingleAnswerMemorized;

@@ -5,43 +5,22 @@ export async function GetMaturaYearSession(year:number, session:number)
 {
     var result:IAPI = {} as IAPI
  
-    try{
-        const query = await db.collection("maturasData2").where("year", "==", year)
+    return db.collection("maturasData2").where("year", "==", year)
         .where("session", "==", session)
-        .get()    
+        .get().then(data => {
+            let tmp:APIData[] = []
+            data.docs.map(doc => {
+                tmp.push(doc.data() as APIData);
+            })
 
-        if(query.empty){
+            result.data = tmp;
+            result.status= "OK"
+
+            return result;
+        }).catch(e => {
             result.status="ERROR"
-            result.error = "inavalid query paramaters"
+            result.error = e
 
-            return result
-        }
-
-        result.status= "OK"
-        let tmp:APIData[] = []
-        query.forEach(doc => {
-            tmp.push(doc.data() as APIData)
+            return result;
         })
-        result.data = tmp;
-
-        return result;
-
-    } catch(error:any){
-        result.status="ERROR"
-        result.error = error
-
-        return result;
-    }
-   
-    // if(query.empty){
-    //     data.status = "ERROR"
-    //     data.data = "wrong paramaters"
-
-    //     res.forEach(doc => {
-    //         result.data.push(doc.data() as APIData)
-    //     })
-    // }else{
-    //     data.status = "OK"
-    //     data.data = query.docs
-    // }
 }
