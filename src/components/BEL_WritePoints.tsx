@@ -54,11 +54,12 @@ function BEL_WritePoints(props:IBEL_WritePoints){
     }
 
     return(<div className={styles.EveryExamComponent}>
+        {console.log("rerendered")}
         <p>{props.question}</p>
         <p>Разделете отговорите си със символа |</p>
         <input type="text" disabled={props.checking} onChange={e => HandleChange(e.target.value)}></input>
         {props.checking && <div>
-            <textarea className={`"${styles.TextareaMaxWidth}`} disabled={true} value={props.correct.join(" | ")}></textarea>
+            <textarea className={styles.TextareaMaxWidthChecking} disabled={true} value={props.correct.join(" | ")}></textarea>
             <PointsFromQuestion points={CheckingDisplayScore()}></PointsFromQuestion>
         </div>}
     </div>)
