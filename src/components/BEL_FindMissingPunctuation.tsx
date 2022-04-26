@@ -67,4 +67,11 @@ function BEL_FindMissingPunctuation(props:any){
     </div>)
 }
 
-export default React.memo(BEL_FindMissingPunctuation);
+const BEL_FindMissingPunctuationMemorized = React.memo(BEL_FindMissingPunctuation, (prevProps, nextProps) => {
+    if (prevProps.checking === nextProps.checking) {
+      return true; // props are equal
+    }
+    return false; // props are not equal -> update the component
+})
+
+export default BEL_FindMissingPunctuationMemorized;

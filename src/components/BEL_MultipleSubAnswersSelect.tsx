@@ -113,5 +113,12 @@ function BEL_MultipleSubAnswersSelect(props:any)
     )
 }
 
-export default React.memo(BEL_MultipleSubAnswersSelect);
+const BEL_MultipleSubAnswersSelectMemorized = React.memo(BEL_MultipleSubAnswersSelect, (prevProps, nextProps) => {
+    if (prevProps.checking === nextProps.checking) {
+      return true; // props are equal
+    }
+    return false; // props are not equal -> update the component
+})
+
+export default BEL_MultipleSubAnswersSelectMemorized;
 

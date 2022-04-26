@@ -12,10 +12,17 @@ function BEL_Uncheckable(props:IBEL_Uncheckable){
         <textarea className={styles.TextareaMaxWidth} disabled={props.checking} onChange={e => setInputText(e.target.value)}></textarea>
         {props.checking && <div>
             <p>Този въпрос нямам лесен за показване отговор. Моля свържете се с учител който може да го провери.</p>
-            <textarea className={styles.TextareaMaxWidth} value={inputText} disabled={true}></textarea>
+            <textarea className={styles.TextareaMaxWidthChecking} value={inputText} disabled={true}></textarea>
             <a rel="noreferrer" download={`${props.year}_${props.session}_${Date.now()}.txt`} href={URL.createObjectURL(new Blob([inputText], {type:'data:application/text;charset=utf-8'}))} target="_blank">Натиснете тук за да смъкнете отговорът ви като файл.</a>
         </div>}
     </div>)
 }
 
-export default React.memo(BEL_Uncheckable);
+const BEL_UncheckableMemorized = React.memo(BEL_Uncheckable, (prevProps, nextProps) => {
+    if (prevProps.checking === nextProps.checking) {
+      return true; // props are equal
+    }
+    return false; // props are not equal -> update the component
+})
+
+export default BEL_UncheckableMemorized;

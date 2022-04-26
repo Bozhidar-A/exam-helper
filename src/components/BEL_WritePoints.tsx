@@ -54,14 +54,22 @@ function BEL_WritePoints(props:IBEL_WritePoints){
     }
 
     return(<div className={styles.EveryExamComponent}>
+        {console.log("rerendered")}
         <p>{props.question}</p>
         <p>Разделете отговорите си със символа |</p>
         <input type="text" disabled={props.checking} onChange={e => HandleChange(e.target.value)}></input>
         {props.checking && <div>
-            <textarea className={`"${styles.TextareaMaxWidth}`} disabled={true} value={props.correct.join(" | ")}></textarea>
+            <textarea className={styles.TextareaMaxWidthChecking} disabled={true} value={props.correct.join(" | ")}></textarea>
             <PointsFromQuestion points={CheckingDisplayScore()}></PointsFromQuestion>
         </div>}
     </div>)
 }
 
-export default React.memo(BEL_WritePoints);
+const BEL_WritePointsMemorized = React.memo(BEL_WritePoints, (prevProps, nextProps) => {
+    if (prevProps.checking === nextProps.checking) {
+      return true; // props are equal
+    }
+    return false; // props are not equal -> update the component
+})
+
+export default BEL_WritePointsMemorized;

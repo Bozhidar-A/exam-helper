@@ -1,17 +1,17 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import BEL_MultipleAnswers from "./BEL_MultipleAnswers";
-import BEL_MultipleSubAnswersSelect from "./BEL_MultipleSubAnswersSelect";
+import BEL_MultipleAnswersMemorized from "./BEL_MultipleAnswers";
+import BEL_MultipleSubAnswersSelectMemorized from "./BEL_MultipleSubAnswersSelect";
 import BEL_SingleAnswerMemorized from "./BEL_SingleAnswer";
-import BEL_FindMissingPunctuation from "./BEL_FindMissingPunctuation";
-import BEL_MultipleSubAnswersWrite from "./BEL_MultipleSubAnswersWrite";
-import BEL_Connect from "./BEL_Connect";
-import BEL_WritePoints from "./BEL_WritePoints";
+import BEL_FindMissingPunctuationMemorized from "./BEL_FindMissingPunctuation";
+import BEL_MultipleSubAnswersWriteMemorized from "./BEL_MultipleSubAnswersWrite";
+import BEL_ConnectMemorized from "./BEL_Connect";
+import BEL_WritePointsMemorized from "./BEL_WritePoints";
 import IBEL_IMultipleSubAnswersWriteAnswers from "../interfaces/IBEL_IMultipleSubAnswersWriteAnswers";
 import { GetMaturaYearSession } from "./NotDrawable/APIConnector";
 import { Oval } from "react-loader-spinner";
 import IAPI, { APIData } from "../interfaces/IAPI";
 import BEL_Works from "./BEL_Works";
-import BEL_Uncheckable from "./BEL_Uncheckable";
+import BEL_UncheckableMemorized from "./BEL_Uncheckable";
 import { useLocation } from "react-router-dom";
 import styles from "../css/main.module.css"
 import CountdownExam from "./CountdownExam";
@@ -67,23 +67,23 @@ function ExamManager()
                 try{
                     switch (q.type) {
                         case "BEL_Uncheckable":
-                            return <BEL_Uncheckable key={q.id} question={q.question!} year={q.year} session={q.session} checking={checking}></BEL_Uncheckable>
+                            return <BEL_UncheckableMemorized key={q.id} question={q.question!} year={q.year} session={q.session} checking={checking}></BEL_UncheckableMemorized>
                         case "BEL_Works":
                             return <BEL_Works key={q.id} textsArr={q.textsArr!}></BEL_Works> 
                         case "BEL_SingleAnswer":
                             return <BEL_SingleAnswerMemorized key={q.id} id={q.id} qNum={q.qNum} question={q.question!} wrong={q.wrong as string[]} correct={q.correct as string} UpdateScore={UpdateScore} checking={checking}></BEL_SingleAnswerMemorized>
                         case "BEL_MultipleAnswers":
-                            return <BEL_MultipleAnswers key={q.id} id={q.id} qNum={q.qNum} question={q.question!} wrong={q.wrong! as string[]} correct={q.correct! as string[]} UpdateScore={UpdateScore} checking={checking}></BEL_MultipleAnswers>
+                            return <BEL_MultipleAnswersMemorized key={q.id} id={q.id} qNum={q.qNum} question={q.question!} wrong={q.wrong! as string[]} correct={q.correct! as string[]} UpdateScore={UpdateScore} checking={checking}></BEL_MultipleAnswersMemorized>
                         case "BEL_MultipleSubAnswersSelect":
-                            return <BEL_MultipleSubAnswersSelect key={q.id} data={q} UpdateScore={UpdateScore} checking={checking}></BEL_MultipleSubAnswersSelect>
+                            return <BEL_MultipleSubAnswersSelectMemorized key={q.id} data={q} UpdateScore={UpdateScore} checking={checking}></BEL_MultipleSubAnswersSelectMemorized>
                         case "BEL_FindMissingPunctuation":
-                            return <BEL_FindMissingPunctuation key={q.id} data={q} UpdateScore={UpdateScore} checking={checking}></BEL_FindMissingPunctuation>
+                            return <BEL_FindMissingPunctuationMemorized key={q.id} data={q} UpdateScore={UpdateScore} checking={checking}></BEL_FindMissingPunctuationMemorized>
                         case "BEL_MultipleSubAnswersWrite":
-                            return <BEL_MultipleSubAnswersWrite key={q.id} UpdateScore={UpdateScore} id={q.id} qNum={q.qNum} question={q.question!} answers={q.answers! as IBEL_IMultipleSubAnswersWriteAnswers[]} checking={checking}></BEL_MultipleSubAnswersWrite>
+                            return <BEL_MultipleSubAnswersWriteMemorized key={q.id} UpdateScore={UpdateScore} id={q.id} qNum={q.qNum} question={q.question!} answers={q.answers! as IBEL_IMultipleSubAnswersWriteAnswers[]} checking={checking}></BEL_MultipleSubAnswersWriteMemorized>
                         case "BEL_Connect":
-                            return <BEL_Connect key={q.id} id={q.id} qNum={q.qNum} type={q.type} options={q.options!} UpdateScore={UpdateScore} checking={checking}></BEL_Connect>
+                            return <BEL_ConnectMemorized key={q.id} id={q.id} qNum={q.qNum} type={q.type} options={q.options!} UpdateScore={UpdateScore} checking={checking}></BEL_ConnectMemorized>
                         case "BEL_WritePoints":
-                            return <BEL_WritePoints key={q.id} id={q.id} qNum={q.qNum} question={q.question!} correct={q.correct as string[]} maxPoints={q.maxPoints!} UpdateScore={UpdateScore} checking={checking}></BEL_WritePoints>
+                            return <BEL_WritePointsMemorized key={q.id} id={q.id} qNum={q.qNum} question={q.question!} correct={q.correct as string[]} maxPoints={q.maxPoints!} UpdateScore={UpdateScore} checking={checking}></BEL_WritePointsMemorized>
                         default:
                             console.error(`No component found for the following data. This should not be possible.`)
                             console.log(q)
