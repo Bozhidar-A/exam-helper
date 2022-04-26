@@ -1,4 +1,3 @@
-import React from "react";
 import IBEL_Works from "../interfaces/IBEL_Works";
 import styles from "../css/main.module.css"
 
@@ -10,4 +9,4 @@ function BEL_Works(props:IBEL_Works){
     </div>)
 }
 
-export default React.memo(BEL_Works);
+export default BEL_Works;

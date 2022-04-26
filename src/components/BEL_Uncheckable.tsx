@@ -18,4 +18,11 @@ function BEL_Uncheckable(props:IBEL_Uncheckable){
     </div>)
 }
 
-export default React.memo(BEL_Uncheckable);
+const BEL_UncheckableMemorized = React.memo(BEL_Uncheckable, (prevProps, nextProps) => {
+    if (prevProps.checking === nextProps.checking) {
+      return true; // props are equal
+    }
+    return false; // props are not equal -> update the component
+})
+
+export default BEL_UncheckableMemorized;

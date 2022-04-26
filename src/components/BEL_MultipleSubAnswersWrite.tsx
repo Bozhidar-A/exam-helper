@@ -90,5 +90,12 @@ function BEL_MultipleSubAnswersWrite(props:IBEL_MultipleSubAnswersWrite)
     )
 }
 
-export default React.memo(BEL_MultipleSubAnswersWrite);
+const BEL_MultipleSubAnswersWriteMemorized = React.memo(BEL_MultipleSubAnswersWrite, (prevProps, nextProps) => {
+    if (prevProps.checking === nextProps.checking) {
+      return true; // props are equal
+    }
+    return false; // props are not equal -> update the component
+})
+
+export default BEL_MultipleSubAnswersWriteMemorized;
 

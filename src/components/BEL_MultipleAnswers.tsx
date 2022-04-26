@@ -104,4 +104,11 @@ function BEL_MultipleAnswers(props:IBEL_MultipleAnswers)
     )
 }
 
-export default React.memo(BEL_MultipleAnswers);
+const BEL_MultipleAnswersMemorized = React.memo(BEL_MultipleAnswers, (prevProps, nextProps) => {
+    if (prevProps.checking === nextProps.checking) {
+      return true; // props are equal
+    }
+    return false; // props are not equal -> update the component
+})
+
+export default BEL_MultipleAnswersMemorized;

@@ -110,4 +110,11 @@ function BEL_Connect(props:IConnect){
     </div>)
 }
 
-export default React.memo(BEL_Connect);
+const BEL_ConnectMemorized = React.memo(BEL_Connect, (prevProps, nextProps) => {
+    if (prevProps.checking === nextProps.checking) {
+      return true; // props are equal
+    }
+    return false; // props are not equal -> update the component
+})
+
+export default BEL_ConnectMemorized;

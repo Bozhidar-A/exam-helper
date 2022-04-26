@@ -64,4 +64,11 @@ function BEL_WritePoints(props:IBEL_WritePoints){
     </div>)
 }
 
-export default React.memo(BEL_WritePoints);
+const BEL_WritePointsMemorized = React.memo(BEL_WritePoints, (prevProps, nextProps) => {
+    if (prevProps.checking === nextProps.checking) {
+      return true; // props are equal
+    }
+    return false; // props are not equal -> update the component
+})
+
+export default BEL_WritePointsMemorized;
