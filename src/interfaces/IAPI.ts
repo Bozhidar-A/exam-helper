@@ -36,3 +36,14 @@ export default interface IAPI{
     error:any,
     data:APIData[]
 }
+
+export interface IAPISelectorData{
+    year:number,
+    sessions:number[]
+}
+
+export interface IAPISelector{
+    status:string,
+    error:any,
+    data:IAPISelectorData[]
+}

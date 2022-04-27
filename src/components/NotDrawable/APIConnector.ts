@@ -1,4 +1,4 @@
-import IAPI, { APIData } from "../../interfaces/IAPI"
+import IAPI, { APIData, IAPISelector, IAPISelectorData } from "../../interfaces/IAPI"
 import {db} from "../../config/firebase"
 
 export async function GetMaturaYearSession(year:number, session:number)
@@ -23,4 +23,26 @@ export async function GetMaturaYearSession(year:number, session:number)
 
             return result;
         })
+}
+
+export async function GetAvailableYearsSessions() {
+    var result:IAPISelector = {} as IAPISelector
+
+    return db.collection("selectorData").get().then((data) => {
+        let tmp:IAPISelectorData[] = [];
+
+        data.docs.map(doc => {
+            tmp.push(doc.data() as IAPISelectorData);
+        });
+
+        result.data = tmp;
+        result.status = "OK"
+
+        return result;
+    }).catch(e => {
+        result.status="ERROR"
+        result.error = e
+
+        return result;
+    })
 }
