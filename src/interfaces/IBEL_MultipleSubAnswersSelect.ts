@@ -1,5 +1,10 @@
-export default interface IMultipleSubAnswers{
-    label:string,
+export interface IMultipleSubAnswersSelectAnswers{
+    correct:string[],
     wrong:string[],
-    correct:string,
+    label:string
+}
+
+export default interface IMultipleSubAnswersSelect{
+    question:string,
+    answers:IMultipleSubAnswersSelectAnswers[]
 }

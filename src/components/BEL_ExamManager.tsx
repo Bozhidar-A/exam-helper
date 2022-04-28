@@ -71,7 +71,7 @@ function ExamManager()
                         case "BEL_Works":
                             return <BEL_Works key={q.id} textsArr={q.textsArr!}></BEL_Works> 
                         case "BEL_SingleAnswer":
-                            return <BEL_SingleAnswerMemorized key={q.id} id={q.id} qNum={q.qNum} question={q.question!} wrong={q.wrong as string[]} correct={q.correct as string} UpdateScore={UpdateScore} checking={checking}></BEL_SingleAnswerMemorized>
+                            return <BEL_SingleAnswerMemorized key={q.id} id={q.id} qNum={q.qNum} question={q.question!} wrong={q.wrong as string[]} correct={q.correct![0]} UpdateScore={UpdateScore} checking={checking}></BEL_SingleAnswerMemorized>
                         case "BEL_MultipleAnswers":
                             return <BEL_MultipleAnswersMemorized key={q.id} id={q.id} qNum={q.qNum} question={q.question!} wrong={q.wrong! as string[]} correct={q.correct! as string[]} UpdateScore={UpdateScore} checking={checking}></BEL_MultipleAnswersMemorized>
                         case "BEL_MultipleSubAnswersSelect":

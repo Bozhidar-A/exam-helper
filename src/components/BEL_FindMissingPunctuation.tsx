@@ -31,7 +31,7 @@ function BEL_FindMissingPunctuation(props:any){
     }
 
     function FormatCorrectText() {
-        var tmp:string = props.data.wrong;
+        var tmp:string = props.data.wrong[0];
 
         props.data.punctuation.map((pu:any) => {
             tmp = tmp.substring(0, pu.index) + `<b>${pu.symbol}</b>` + tmp.substring(pu.index)
@@ -55,7 +55,7 @@ function BEL_FindMissingPunctuation(props:any){
     return(<div className={styles.EveryExamComponent}>
         <p>{props.data.question}</p>
         <br />
-        <pre dangerouslySetInnerHTML={{ __html: props.data.wrong.replace("\n", "<br/>") }}></pre>
+        <pre dangerouslySetInnerHTML={{ __html: props.data.wrong[0].replace("\n", "<br/>") }}></pre>
         <br />
         <textarea className={styles.TextareaMaxWidth} disabled={props.checking} onChange={e => {HandleChange(e.target.value)}}></textarea>
         {/* I should disable pasting here as you have to rewrite the whole thing on the exam, but i won't */}

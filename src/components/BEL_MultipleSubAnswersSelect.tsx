@@ -1,11 +1,11 @@
 import React from "react";
 import { FormEvent, useState } from "react";
-import IMultipleSubAnswersSelect from "../interfaces/IBEL_MultipleSubAnswersSelect";
+import IMultipleSubAnswersSelect, { IMultipleSubAnswersSelectAnswers } from "../interfaces/IBEL_MultipleSubAnswersSelect";
 import PointsFromQuestion from "./PointsFromQuestion";
 import styles from "../css/main.module.css"
 
 interface IOptions{
-    data:IMultipleSubAnswersSelect,
+    data:IMultipleSubAnswersSelectAnswers,
     setValue: any,
     index:number,
     quid:number,
@@ -25,7 +25,7 @@ function Options(props:IOptions)
     {
         if(props.checking)
         {
-            if(op === props.data.correct)
+            if(op === props.data.correct[0])
             {
                 return "bg-lime-500" 
             }
@@ -36,7 +36,7 @@ function Options(props:IOptions)
         }
     }
 
-    let options = [props.data.correct, ...props.data.wrong].sort();
+    let options = [...props.data.correct, ...props.data.wrong].sort();
    
     return(
         <div>
