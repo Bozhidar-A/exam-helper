@@ -119,7 +119,7 @@ function ExamManager()
             <p>Модул №1</p>
             {!checking && <button onClick={() => NextModule()}>Следващ модул</button>}
             <br />
-            {SwitchRenderer(copy.filter(data => data.qNum <= 30))}
+            {SwitchRenderer([...copy.filter(data => data.qNum <= 22), ...copy.filter(data => data.qNum === 42), ...copy.filter(data => data.qNum > 22 && data.qNum <= 30)])}
         </div>
         //gets all with lower or equal qNum to 30
 
@@ -127,9 +127,9 @@ function ExamManager()
             <p>Модул №2</p>
             {!checking && <button onClick={() => NextModule()}>Следващ модул</button>}
             <br />
-            {SwitchRenderer([copy.filter(data => data.qNum === 22.5)[0], ...copy.filter(data => data.qNum > 30 && data.qNum < 41)])}
+            {SwitchRenderer([...copy.filter(data => data.qNum === 42), ...copy.filter(data => data.qNum > 30 && data.qNum <= 37), ...copy.filter(data => data.qNum === 43), ...copy.filter(data => data.qNum > 37 && data.qNum < 41)])}
         </div>
-        //places the text 22.5 at the beginning and spreads all question except 41
+        //places the text 42 at the beginning , place 43 after 37 and spreads all question except 41
 
         var mThree = <div ref={maturaModuleThreeRef} className="hidden">
             <p>Модул №3</p>
