@@ -83,7 +83,6 @@ function BEL_FindMissingPunctuation(props:any){
     }
 
     return(<div className={styles.EveryExamComponent}>
-        {givenPts}
         <p>{props.data.question}</p>
         <p>Моля използвайте „ и “</p>
         <br />
