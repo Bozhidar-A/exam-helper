@@ -12,7 +12,7 @@ import { Oval } from "react-loader-spinner";
 import IAPI, { APIData } from "../interfaces/IAPI";
 import BEL_Works from "./BEL_Works";
 import BEL_UncheckableMemorized from "./BEL_Uncheckable";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import styles from "../css/main.module.css"
 import CountdownExam from "./CountdownExam";
 
@@ -110,6 +110,10 @@ function ExamManager()
         setMaturaModuleCount(maturaModuleCount + 1)
     }
 
+    function NextModuleButton(){
+        return <>{!checking && <button onClick={() => NextModule()}>Следващ модул</button>}</>
+    }
+
     function ModuleSelector(){
         //this is very bad
         //there must a better way to handle this
@@ -117,17 +121,19 @@ function ExamManager()
         let copy = [...testData];
         var mOne = <div ref={maturaModuleOneRef}>
             <p>Модул №1</p>
-            {!checking && <button onClick={() => NextModule()}>Следващ модул</button>}
+            {NextModuleButton()}
             <br />
             {SwitchRenderer([...copy.filter(data => data.qNum <= 22), ...copy.filter(data => data.qNum === 42), ...copy.filter(data => data.qNum > 22 && data.qNum <= 30)])}
+            {NextModuleButton()}
         </div>
         //gets all with lower or equal qNum to 30
 
         var mTwo =<div ref={maturaModuleTwoRef} className="hidden" >
             <p>Модул №2</p>
-            {!checking && <button onClick={() => NextModule()}>Следващ модул</button>}
+            {NextModuleButton()}
             <br />
             {SwitchRenderer([...copy.filter(data => data.qNum === 42), ...copy.filter(data => data.qNum > 30 && data.qNum <= 37), ...copy.filter(data => data.qNum === 43), ...copy.filter(data => data.qNum > 37 && data.qNum < 41)])}
+            {NextModuleButton()}
         </div>
         //places the text 42 at the beginning , place 43 after 37 and spreads all question except 41
 
@@ -190,6 +196,10 @@ function ExamManager()
         }
     }
 
+    function NewExam(){
+        return <>{checking && <Link to={`/`}>Направте нов тест</Link>}</>
+    }
+
     function Display()
     {
         if(loading){
@@ -206,8 +216,10 @@ function ExamManager()
         {
             return(<div>
                 <div className={`${styles.sticky_eader} ${styles.center_text}`}>{!checking && !loading ? memorizeCountdown : null}</div>
+                {NewExam()}
                 {checking && <p>Общо имате {score} точки. Вашата оценка е {CalcGradeFromPoints()}!</p>}
                 {ModuleSelector()}
+                {NewExam()}
             </div>)
         }  
     }
