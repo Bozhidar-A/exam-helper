@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import styles from "../css/main.module.css"
 import PointsFromQuestion from "./PointsFromQuestion";
+const Diff = require('diff');
 
 function BEL_FindMissingPunctuation(props:any){
 
@@ -13,10 +14,28 @@ function BEL_FindMissingPunctuation(props:any){
         setInputText(text);
 
         let pts = 0;
+        var diff = Diff.diffChars(text, props.data.wrong)
+        //this is kind of bad, but it returns multiple objects and works
+        var diffChars:string[] = []
+
+        diff.map((ch:any)=> {
+            if(ch.count === 1){
+                //this is the bad part
+                //it returns multiple objects but the ones we want are with count of 1
+                //so we get them and push the chars to a new array to use .includes
+               diffChars.push(ch.value);
+            }
+        })
 
         props.data.punctuation.map((pu:any) => {
-            if(text[pu.index] === pu.symbol){
+            //if the diff array of chars contains one of the correct chars
+            if(diffChars.includes(pu.symbol)){
                 pts++;
+                //update points
+                var index = diffChars.indexOf(pu.symbol);
+                diffChars.splice(index, 1);
+                //get the index of that element and remove it
+                //next iteration we wont look for it
             }
         })
 
@@ -43,9 +62,20 @@ function BEL_FindMissingPunctuation(props:any){
     function CheckingDisplayScore(){
         var score:number = 0;
 
+         var diff = Diff.diffChars(inputText, props.data.wrong)
+        var diffChars:string[] = []
+
+        diff.map((ch:any)=> {
+            if(ch.count === 1){
+               diffChars.push(ch.value);
+            }
+        })
+
         props.data.punctuation.map((pu:any) => {
-            if(inputText[pu.index] === pu.symbol){
+            if(diffChars.includes(pu.symbol)){
                 score++;
+                var index = diffChars.indexOf(pu.symbol);
+                diffChars.splice(index, 1);
             }
         })
 
@@ -53,11 +83,13 @@ function BEL_FindMissingPunctuation(props:any){
     }
 
     return(<div className={styles.EveryExamComponent}>
+        {givenPts}
         <p>{props.data.question}</p>
+        <p>Моля използвайте „ и “</p>
         <br />
         <pre dangerouslySetInnerHTML={{ __html: props.data.wrong.replace("\n", "<br/>") }}></pre>
         <br />
-        <textarea className={styles.TextareaMaxWidth} disabled={props.checking} onChange={e => {HandleChange(e.target.value)}}></textarea>
+        <textarea className={styles.TextareaMaxWidth} disabled={props.checking} onChange={e => {HandleChange(e.target.value)}} defaultValue={props.data.wrong.replace("\n", "<br/>")}></textarea>
         {/* I should disable pasting here as you have to rewrite the whole thing on the exam, but i won't */}
         {props.checking && 
             <div>
