@@ -5,7 +5,7 @@ export async function GetMaturaYearSession(year:number, session:number)
 {
     var result:IAPI = {} as IAPI
  
-    return db.collection("maturasData2").where("year", "==", year)
+    return db.collection("maturaData3").where("year", "==", year)
         .where("session", "==", session)
         .get().then(data => {
             let tmp:APIData[] = []
@@ -28,7 +28,7 @@ export async function GetMaturaYearSession(year:number, session:number)
 export async function GetAvailableYearsSessions() {
     var result:IAPISelector = {} as IAPISelector
 
-    return db.collection("selectorData").get().then((data) => {
+    return db.collection("selectorData2").get().then((data) => {
         let tmp:IAPISelectorData[] = [];
 
         data.docs.map(doc => {
