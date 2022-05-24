@@ -15,7 +15,7 @@ function Selector(){
     useEffect(() => {
         GetAvailableYearsSessions().then((res:IAPISelector) => {
 
-            if(res.status != "OK"){
+            if(res.status !== "OK"){
                 console.error(res.error);
                 setAPIError(true);
                 setAPILoading(false);
@@ -58,15 +58,17 @@ function Selector(){
                 </select>
                 <br />
                 <p>Сесия: </p>
-                <select onChange={(e) => setSelectedSession(e.target.value)}>
+                {selectedYear !== "" ? <select onChange={(e) => setSelectedSession(e.target.value)}>
                     <option value=""></option>
                     {/* double loops are bad, but it has to be way for the data to be structured nicely */}
-                    {yearsSessions?.map(combo => {
+                    {yearsSessions?.filter(obj => {
+                      return obj.year.toString() === selectedYear
+                    }).map(combo => {
                         return combo.sessions.map(session => {
                             return <option value={session}>{SessionStringToInt(session)}</option>
                         })
                     })}
-                </select>
+                </select> : <p>Моля изберете годината първо</p>}
                 <br />
                 {selectedYear === "" || selectedSession === "" ? <p>Моля изберете коя година и сесия бихте искали да правите</p> : 
                 <Link
