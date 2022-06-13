@@ -9,14 +9,20 @@ import {
   Route,
 } from "react-router-dom";
 import ExamManager from './components/BEL_ExamManager';
+import { Provider } from 'react-redux';
+import {store} from './components/NotDrawable/ReduxStore'
+import UpdateAPIULR from './components/UpdateAPIULR';
 
 ReactDOM.render(
-  <BrowserRouter>
-    <Routes>
-      <Route path="/" element={<App />} />
-      <Route path="/exam" element={ <ExamManager/>} />
-    </Routes>
-  </BrowserRouter>,
+  <Provider store={store}>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<App />} />
+        <Route path="/exam" element={ <ExamManager/>} />
+        <Route path="/updateAPIURL" element={ <UpdateAPIULR/>} />
+      </Routes>
+    </BrowserRouter>
+  </Provider>,
   document.getElementById('root')
 );
 

@@ -4,6 +4,7 @@ import { IAPISelector, IAPISelectorData } from "../interfaces/IAPI";
 import { GetAvailableYearsSessions } from "./NotDrawable/APIConnector";
 import styles from "../css/main.module.css"
 import { Oval } from "react-loader-spinner";
+import { useSelector } from "react-redux";
 
 function Selector(){
     const [yearsSessions, setYearsSessions] = useState<IAPISelectorData[]>();
@@ -11,9 +12,10 @@ function Selector(){
     const [APIError, setAPIError] = useState(false);
     const [selectedYear, setSelectedYear] = useState<string>("");
     const [selectedSession, setSelectedSession] = useState<string>("");
+    const APIURL = useSelector((state:any) => state.APIURL.URL)
 
     useEffect(() => {
-        GetAvailableYearsSessions().then((res:IAPISelector) => {
+        GetAvailableYearsSessions(APIURL).then((res:IAPISelector) => {
 
             if(res.status !== "OK"){
                 console.error(res.error);
@@ -82,6 +84,7 @@ function Selector(){
     }
 
     return(<div>
+        <Link to={`/updateAPIURL`}><p>Кликнете тук да обновите API сървара </p></Link>
         <div>{Display()}</div>
     </div>)
 }

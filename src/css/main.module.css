@@ -11,6 +11,15 @@
   min-height: 100vh;
 }
 
+.CenterScreenColumn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
 .background_red {
   background-color: red;
 }
