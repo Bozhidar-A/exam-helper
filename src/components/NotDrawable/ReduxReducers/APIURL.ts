@@ -3,7 +3,8 @@ import { createSlice } from '@reduxjs/toolkit'
 export const APIULR = createSlice({
   name: 'APIULR',
   initialState: {
-    URL: "http://localhost",
+    //Digitalocean droplet
+    URL: "http://188.166.75.240:7000/",
   },
   reducers: {
     Update: (state, action) => {

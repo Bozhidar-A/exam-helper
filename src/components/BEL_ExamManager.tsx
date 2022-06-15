@@ -15,6 +15,7 @@ import BEL_UncheckableMemorized from "./BEL_Uncheckable";
 import { Link, useLocation } from "react-router-dom";
 import styles from "../css/main.module.css"
 import CountdownExam from "./CountdownExam";
+import { useSelector } from "react-redux";
 
 function ExamManager()
 {
@@ -28,6 +29,7 @@ function ExamManager()
     const [maturaModuleCount, setMaturaModuleCount] = useState(1);
     const [loading, setLoading] = useState(true);
     const [APIError, setAPIError] = useState(false);
+    const APIURL = useSelector((state:any) => state.APIURL.URL)
 
     const location = useLocation();
     // console.log(location.state)
@@ -39,7 +41,7 @@ function ExamManager()
     useEffect(() => {
         // @ts-ignore
         const{year, session} = location.state
-        GetMaturaYearSession(parseInt(year),parseInt(session)).then((result:IAPI) => {
+        GetMaturaYearSession(parseInt(year),parseInt(session), APIURL).then((result:IAPI) => {
             if(result.status === "OK"){
                 setTestData(result.data.sort((firstItem, secondItem) => firstItem.qNum - secondItem.qNum))
                 //sorts by qNum
