@@ -5,7 +5,7 @@ It currently only supports one.
 
 Sister project to [exam-helper-api](https://github.com/Bozhidar-A/exam-helper-api)
 
-Live build can be found at [exam-helper-njvedf7af-bozhidar-a.vercel.app](https://exam-helper-njvedf7af-bozhidar-a.vercel.app/)
+Live build can be found at [https://exam-helper-swart.vercel.app/](https://exam-helper-swart.vercel.app/)
 
 ---
 
