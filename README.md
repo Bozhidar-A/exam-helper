@@ -1,7 +1,7 @@
 # exam-helper
 
 This project takes data for a test from previously held publicly available ones and creates a safe environment to quickly and easily solve them as practice.
-It currently only supports one.
+It currently only supports one, the Bulgarian State Maturity Exam for the Bulgarian language.
 
 Sister project to [exam-helper-api](https://github.com/Bozhidar-A/exam-helper-api)
 
